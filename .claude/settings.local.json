@@ -20,7 +20,17 @@
       "Bash(grep -oE '\"message\":\"[^\"]{0,200}\"')",
       "Bash(python3 -c 'import sys,json,re; html=sys.stdin.read\\(\\); m=re.search\\(r'\\\\''__NEXT_DATA__[^>]*>\\([^<]+\\)<'\\\\'', html\\); *)",
       "Bash(kill 12048)",
-      "Bash(echo \"exit=$?\")"
+      "Bash(echo \"exit=$?\")",
+      "Bash(node -e \"const s = require\\('sharp'\\); console.log\\('sharp version:', s.versions\\);\")",
+      "Bash(node *)",
+      "Bash(curl -s http://localhost:3000/ -o /dev/null -w \"GET /: %{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:3000/logo.svg -o /dev/null -w \"GET /logo.svg: %{http_code} \\(%{size_download} bytes\\)\\\\n\")",
+      "Bash(curl -s http://localhost:3000/favicon.ico -o /dev/null -w \"GET /favicon.ico: %{http_code} \\(%{size_download} bytes\\)\\\\n\")",
+      "Bash(curl -s http://localhost:3000/og-image.png -o /dev/null -w \"GET /og-image.png: %{http_code} \\(%{size_download} bytes\\)\\\\n\")",
+      "Bash(curl -s http://localhost:3000/site.webmanifest -o /dev/null -w \"GET /site.webmanifest: %{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(curl *)",
+      "Bash(awk 'NR>3 {tot+=$5; print $5\"\\\\t\"$NF} END {print \"---\"; print tot/1024\" KB total\"}')"
     ]
   }
 }

@@ -1,33 +1,58 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CookieBanner from "@/components/CookieBanner";
 
 export const metadata: Metadata = {
-  title:
-    "โปรแกรมคำนวณดอกเบี้ยทบต้น พร้อมกราฟและตาราง DCA | tobtonn.com",
+  metadataBase: new URL("https://tobtonn.com"),
+  title: {
+    default:
+      "โปรแกรมคำนวณดอกเบี้ยทบต้น พร้อมกราฟและตาราง DCA | tobtonn.com",
+    template: "%s | tobtonn",
+  },
   description:
     "คำนวณดอกเบี้ยทบต้นออนไลน์ฟรี พร้อมการลงทุนเพิ่มรายเดือน (DCA) แสดงผลเป็นกราฟและตารางรายปี คำนวณผลตอบแทนจากหุ้น กองทุน เงินฝาก ตราสารหนี้",
-  metadataBase: new URL("https://tobtonn.com"),
+  manifest: "/site.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title: "โปรแกรมคำนวณดอกเบี้ยทบต้น พร้อมกราฟและตาราง DCA",
     description:
       "คำนวณดอกเบี้ยทบต้นออนไลน์ฟรี พร้อมการลงทุนเพิ่มรายเดือน (DCA) แสดงผลเป็นกราฟและตารางรายปี",
     url: "https://tobtonn.com",
-    siteName: "tobtonn.com",
+    siteName: "tobtonn",
     locale: "th_TH",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "tobtonn — โปรแกรมคำนวณดอกเบี้ยทบต้น",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "โปรแกรมคำนวณดอกเบี้ยทบต้น | tobtonn.com",
     description:
       "คำนวณดอกเบี้ยทบต้นออนไลน์ฟรี พร้อมกราฟและตาราง DCA",
+    images: ["/twitter-image.png"],
   },
   alternates: {
     canonical: "https://tobtonn.com",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0f4d3a",
 };
 
 const consentDefaultScript = `
@@ -75,7 +100,7 @@ const organizationLd = {
   name: "tobtonn",
   alternateName: "คำนวณดอกเบี้ยทบต้น",
   url: "https://tobtonn.com",
-  logo: "https://tobtonn.com/logo.png",
+  logo: "https://tobtonn.com/logo-mark.svg",
   description: "เครื่องมือคำนวณการเงินภาษาไทย ฟรี",
   foundingDate: "2026",
   email: "hello@tobtonn.com",

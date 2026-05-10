@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
@@ -48,13 +49,15 @@ export default function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-line bg-bg/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent font-display text-lg font-bold text-white">
-            ฿
-          </span>
-          <span className="font-display text-lg font-semibold text-ink">
-            คำนวณดอกเบี้ยทบต้น
-          </span>
+        <Link href="/" className="flex items-center" aria-label="tobtonn — หน้าแรก">
+          <Image
+            src="/logo.svg"
+            alt="tobtonn"
+            width={140}
+            height={40}
+            priority
+            className="h-9 w-auto"
+          />
         </Link>
 
         {/* Desktop nav */}

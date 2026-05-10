@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
 import CookieSettingsButton from "./CookieSettingsButton";
@@ -62,13 +63,14 @@ export default function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4">
         {/* Brand */}
         <div>
-          <div className="mb-3 flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent font-display text-base font-bold text-white">
-              ฿
-            </span>
-            <span className="font-display text-base font-semibold text-white">
-              tobtonn.com
-            </span>
+          <div className="mb-3">
+            <Image
+              src="/logo-white.svg"
+              alt="tobtonn"
+              width={140}
+              height={40}
+              className="h-9 w-auto"
+            />
           </div>
           <p className="text-sm leading-relaxed">
             เครื่องมือคำนวณการเงินออนไลน์ ใช้งานฟรี ไม่ต้องสมัครสมาชิก
