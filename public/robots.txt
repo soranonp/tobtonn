@@ -1,0 +1,17 @@
+# *
+User-agent: *
+Allow: /
+
+# GPTBot
+User-agent: GPTBot
+Disallow: /
+
+# AhrefsBot
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+# Host
+Host: https://tobtonn.com
+
+# Sitemaps
+Sitemap: https://tobtonn.com/sitemap.xml

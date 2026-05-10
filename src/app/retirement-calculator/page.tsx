@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import RetirementCalculator from "./RetirementCalculator";
 import AccordionFAQ from "@/components/AccordionFAQ";
 import ToolsGrid from "@/components/ToolsGrid";
+import AdSlot from "@/components/AdSlot";
+import FinancialDisclaimer from "@/components/FinancialDisclaimer";
 
 export const metadata: Metadata = {
   title: "คำนวณเงินเกษียณ — ต้องมีเท่าไหร่ถึงพอใช้หลังอายุ 60 | tobtonn",
@@ -99,8 +101,16 @@ export default function RetirementCalculatorPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-[1100px] px-4 pb-16">
+      <section className="mx-auto max-w-[1100px] px-4 pb-8">
         <RetirementCalculator />
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 pb-8">
+        <FinancialDisclaimer />
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 pb-12">
+        <AdSlot id="retirement-calc-below-result" size="horizontal" />
       </section>
 
       <ToolsGrid exclude="/retirement-calculator" />

@@ -16,6 +16,7 @@ import { mdxComponents } from "@/components/blog/MdxComponents";
 import { getHeroComponent } from "@/components/blog/heroes";
 import SocialShare from "@/components/blog/SocialShare";
 import TableOfContents from "@/components/blog/TableOfContents";
+import AdSlot from "@/components/AdSlot";
 
 const SITE_URL = "https://tobtonn.com";
 
@@ -216,6 +217,11 @@ export default async function BlogPostPage({ params }: PageProps) {
               <SocialShare url={url} title={post.title} />
             </div>
 
+            {/* Ad — after intro */}
+            <div className="mb-8">
+              <AdSlot id={`blog-${post.slug}-top`} size="in-article" />
+            </div>
+
             {/* Article body */}
             <div className="prose-content text-base">
               <MDXRemote
@@ -227,6 +233,11 @@ export default async function BlogPostPage({ params }: PageProps) {
                   },
                 }}
               />
+            </div>
+
+            {/* Ad — mid/post-article */}
+            <div className="mt-10">
+              <AdSlot id={`blog-${post.slug}-mid`} size="in-article" />
             </div>
 
             {/* Author bio */}

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import LoanCalculator from "./LoanCalculator";
 import AccordionFAQ from "@/components/AccordionFAQ";
 import ToolsGrid from "@/components/ToolsGrid";
+import AdSlot from "@/components/AdSlot";
+import FinancialDisclaimer from "@/components/FinancialDisclaimer";
 
 export const metadata: Metadata = {
   title:
@@ -101,8 +103,16 @@ export default function LoanCalculatorPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-[1100px] px-4 pb-16">
+      <section className="mx-auto max-w-[1100px] px-4 pb-8">
         <LoanCalculator />
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 pb-8">
+        <FinancialDisclaimer />
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 pb-12">
+        <AdSlot id="loan-calc-below-result" size="horizontal" />
       </section>
 
       <ToolsGrid exclude="/loan-calculator" />

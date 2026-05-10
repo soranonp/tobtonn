@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import DCACalculator from "./DCACalculator";
 import AccordionFAQ from "@/components/AccordionFAQ";
 import ToolsGrid from "@/components/ToolsGrid";
+import AdSlot from "@/components/AdSlot";
+import FinancialDisclaimer from "@/components/FinancialDisclaimer";
 
 export const metadata: Metadata = {
   title: "คำนวณ DCA — ลงทุนกองทุนรายเดือน เห็นผลตอบแทนระยะยาว | tobtonn",
@@ -103,8 +105,16 @@ export default function DCACalculatorPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-[1100px] px-4 pb-16">
+      <section className="mx-auto max-w-[1100px] px-4 pb-8">
         <DCACalculator />
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 pb-8">
+        <FinancialDisclaimer />
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 pb-12">
+        <AdSlot id="dca-calc-below-result" size="horizontal" />
       </section>
 
       <ToolsGrid exclude="/dca-calculator" />

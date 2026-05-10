@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
+import CookieSettingsButton from "./CookieSettingsButton";
 
 const toolLinks = [
   { href: "/", label: "คำนวณดอกเบี้ยทบต้น" },
@@ -16,6 +17,36 @@ const navLinks = [
 ];
 
 const policyLinks = [{ href: "/privacy", label: "นโยบายความเป็นส่วนตัว" }];
+
+const socials = [
+  {
+    href: "https://facebook.com/tobtonn",
+    label: "Facebook",
+    icon: (
+      <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.8 3.7-3.8 1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0022 12z" />
+      </svg>
+    ),
+  },
+  {
+    href: "https://twitter.com/tobtonn",
+    label: "X / Twitter",
+    icon: (
+      <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zM17.083 19.77h1.832L7.084 4.126H5.117z" />
+      </svg>
+    ),
+  },
+  {
+    href: "https://line.me/R/ti/p/@tobtonn",
+    label: "Line",
+    icon: (
+      <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M19.4 4H4.6A2.6 2.6 0 002 6.6v10.8A2.6 2.6 0 004.6 20H10v-2.5l4.5 2.3.5.2c2.6 0 4-1.4 4-4V6.6A2.6 2.6 0 0019.4 4zM7.5 14H6v-4h1.5v4zm3.6 0H10v-4h1.1l1.4 2v-2H14v4h-1.1l-1.4-2v2zm5.4-2.5h-1.5v.5h1.5V13h-1.5v.5H17V14h-3v-4h3v.5h-1.5v.5h1.5v.5z" />
+      </svg>
+    ),
+  },
+];
 
 export default function SiteFooter() {
   const featuredPosts = getAllPosts().slice(0, 3);
@@ -42,6 +73,20 @@ export default function SiteFooter() {
           <p className="text-sm leading-relaxed">
             เครื่องมือคำนวณการเงินออนไลน์ ใช้งานฟรี ไม่ต้องสมัครสมาชิก
           </p>
+          <div className="mt-4 flex items-center gap-2">
+            {socials.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/15 text-bg/70 transition-colors hover:border-gold/50 hover:text-gold"
+              >
+                {s.icon}
+              </a>
+            ))}
+          </div>
         </div>
 
         {/* เครื่องมือ */}
@@ -98,6 +143,9 @@ export default function SiteFooter() {
                 </Link>
               </li>
             ))}
+            <li>
+              <CookieSettingsButton className="text-left text-sm transition-colors hover:text-white" />
+            </li>
           </ul>
         </div>
       </div>

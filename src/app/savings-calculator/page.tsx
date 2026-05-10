@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import SavingsCalculator from "./SavingsCalculator";
 import AccordionFAQ from "@/components/AccordionFAQ";
 import ToolsGrid from "@/components/ToolsGrid";
+import AdSlot from "@/components/AdSlot";
+import FinancialDisclaimer from "@/components/FinancialDisclaimer";
 
 export const metadata: Metadata = {
   title:
@@ -100,8 +102,16 @@ export default function SavingsCalculatorPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-[1100px] px-4 pb-16">
+      <section className="mx-auto max-w-[1100px] px-4 pb-8">
         <SavingsCalculator />
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 pb-8">
+        <FinancialDisclaimer />
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 pb-12">
+        <AdSlot id="savings-calc-below-result" size="horizontal" />
       </section>
 
       <ToolsGrid exclude="/savings-calculator" />

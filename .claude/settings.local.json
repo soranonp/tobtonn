@@ -19,7 +19,8 @@
       "Bash(curl -s --max-time 90 -o /tmp/b1.html -w \"HTTP %{http_code}, %{size_download} bytes\\\\n\" \"http://localhost:3000/blog/compound-interest-explained\")",
       "Bash(grep -oE '\"message\":\"[^\"]{0,200}\"')",
       "Bash(python3 -c 'import sys,json,re; html=sys.stdin.read\\(\\); m=re.search\\(r'\\\\''__NEXT_DATA__[^>]*>\\([^<]+\\)<'\\\\'', html\\); *)",
-      "Bash(kill 12048)"
+      "Bash(kill 12048)",
+      "Bash(echo \"exit=$?\")"
     ]
   }
 }

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Calculator from "@/components/Calculator";
 import FAQ from "@/components/FAQ";
+import AdSlot from "@/components/AdSlot";
+import FinancialDisclaimer from "@/components/FinancialDisclaimer";
 import { getAllPosts } from "@/lib/blog";
 
 const tools = [
@@ -91,8 +93,16 @@ export default function Home() {
       </section>
 
       {/* Calculator */}
-      <section className="mx-auto max-w-[980px] px-4 pb-16">
+      <section className="mx-auto max-w-[980px] px-4 pb-8">
         <Calculator />
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 pb-8">
+        <FinancialDisclaimer />
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 pb-12">
+        <AdSlot id="home-below-calc" size="horizontal" />
       </section>
 
       {/* Tools Grid */}
@@ -249,6 +259,10 @@ export default function Home() {
             คำถามที่พบบ่อย
           </h2>
           <FAQ />
+        </section>
+
+        <section>
+          <AdSlot id="home-below-faq" size="horizontal" />
         </section>
       </div>
 
