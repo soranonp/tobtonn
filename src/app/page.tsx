@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Calculator from "@/components/Calculator";
 import FAQ from "@/components/FAQ";
+import { getAllPosts } from "@/lib/blog";
 
 const tools = [
   {
@@ -35,6 +36,7 @@ const assetRates = [
 ];
 
 export default function Home() {
+  const latestPosts = getAllPosts().slice(0, 3);
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -249,6 +251,47 @@ export default function Home() {
           <FAQ />
         </section>
       </div>
+
+      {/* Latest blog posts */}
+      {latestPosts.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 pb-20">
+          <div className="mb-6 flex items-end justify-between">
+            <h2 className="font-display text-2xl font-bold text-ink">
+              บทความล่าสุด
+            </h2>
+            <Link
+              href="/blog"
+              className="text-sm font-medium text-accent hover:text-accent-bright"
+            >
+              ดูทั้งหมด →
+            </Link>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {latestPosts.map((post) => (
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="group flex flex-col rounded-2xl border border-line bg-white/60 p-6 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-accent/30 hover:shadow-lg"
+              >
+                <span className="mb-3 inline-flex w-fit items-center rounded-full border border-accent/20 bg-accent/5 px-3 py-1 text-xs font-medium text-accent">
+                  {post.tag}
+                </span>
+                <h3 className="mb-3 font-display text-lg font-bold leading-snug text-ink transition-colors group-hover:text-accent">
+                  {post.title}
+                </h3>
+                <p className="mb-5 line-clamp-3 flex-1 text-sm leading-relaxed text-ink-soft">
+                  {post.excerpt}
+                </p>
+                <div className="flex items-center gap-3 border-t border-line pt-3 text-xs text-ink-soft">
+                  <span>{post.formattedDate}</span>
+                  <span className="text-line">•</span>
+                  <span>อ่าน {post.readingMinutes} นาที</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </>
   );
 }

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getAllPosts } from "@/lib/blog";
 
 const toolLinks = [
   { href: "/", label: "คำนวณดอกเบี้ยทบต้น" },
@@ -8,8 +9,8 @@ const toolLinks = [
   { href: "/loan-calculator", label: "คำนวณสินเชื่อ" },
 ];
 
-const contentLinks = [
-  { href: "/blog", label: "บทความ" },
+const navLinks = [
+  { href: "/blog", label: "บทความทั้งหมด" },
   { href: "/about", label: "เกี่ยวกับเรา" },
   { href: "/contact", label: "ติดต่อ" },
 ];
@@ -17,6 +18,14 @@ const contentLinks = [
 const policyLinks = [{ href: "/privacy", label: "นโยบายความเป็นส่วนตัว" }];
 
 export default function SiteFooter() {
+  const featuredPosts = getAllPosts().slice(0, 3);
+  const contentLinks = [
+    ...featuredPosts.map((p) => ({
+      href: `/blog/${p.slug}`,
+      label: p.title,
+    })),
+    ...navLinks,
+  ];
   return (
     <footer className="border-t-4 border-gold bg-ink text-bg/70">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4">

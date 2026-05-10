@@ -6,7 +6,20 @@
       "Bash(git init *)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(pkill -f \"next dev\")"
+      "Bash(pkill -f \"next dev\")",
+      "Bash(cp /tmp/wordcount.mjs /Users/non_sonnon/Documents/tobtonn/wordcount.mjs)",
+      "Bash(node wordcount.mjs)",
+      "Bash(npx tsc *)",
+      "Bash(curl -s \"http://localhost:3000/blog/compound-interest-explained\")",
+      "Bash(ps *)",
+      "Bash(touch \"/Users/non_sonnon/Documents/tobtonn/src/app/blog/[slug]/page.tsx\")",
+      "Bash(curl -s --max-time 90 -o /tmp/blog_first.html -w \"first fetch HTTP %{http_code}, %{size_download} bytes\\\\n\" \"http://localhost:3000/blog/compound-interest-explained\")",
+      "Bash(curl -s -o /tmp/home.html -w \"/ -> HTTP %{http_code}, %{size_download} bytes\\\\n\" \"http://localhost:3000/\")",
+      "Bash(curl -s -o /tmp/blog_idx.html -w \"/blog -> HTTP %{http_code}, %{size_download} bytes\\\\n\" \"http://localhost:3000/blog\")",
+      "Bash(curl -s --max-time 90 -o /tmp/b1.html -w \"HTTP %{http_code}, %{size_download} bytes\\\\n\" \"http://localhost:3000/blog/compound-interest-explained\")",
+      "Bash(grep -oE '\"message\":\"[^\"]{0,200}\"')",
+      "Bash(python3 -c 'import sys,json,re; html=sys.stdin.read\\(\\); m=re.search\\(r'\\\\''__NEXT_DATA__[^>]*>\\([^<]+\\)<'\\\\'', html\\); *)",
+      "Bash(kill 12048)"
     ]
   }
 }
