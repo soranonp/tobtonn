@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import {
   BarChart,
   Bar,
@@ -38,7 +39,8 @@ function CustomTooltip({
       </p>
       {payload.map((entry, i) => (
         <p key={i} style={{ color: TOOLTIP_COLORS[entry.name] ?? entry.color }}>
-          {entry.name}: <span className="font-mono">{formatNumber(entry.value)}</span> บาท
+          {entry.name}:{" "}
+          <span className="font-mono">{formatNumber(entry.value)}</span> บาท
         </p>
       ))}
       <p
@@ -72,7 +74,7 @@ function CustomLegend({
   );
 }
 
-export default function CompoundChart({ data }: Props) {
+function CompoundChart({ data }: Props) {
   const chartData = data.map((d) => ({
     name: String(d.year),
     เงินต้นสะสม: Math.round(d.totalContrib),
@@ -85,13 +87,13 @@ export default function CompoundChart({ data }: Props) {
         <BarChart data={chartData} barCategoryGap="20%">
           <XAxis
             dataKey="name"
-            tick={{ fontSize: 12, fill: "#4a5a55" }}
+            tick={{ fontSize: 12, fill: "#2d3a35" }}
             tickLine={false}
             axisLine={{ stroke: "#d8d2c0" }}
             tickFormatter={(v) => `ปี ${v}`}
           />
           <YAxis
-            tick={{ fontSize: 12, fill: "#4a5a55" }}
+            tick={{ fontSize: 12, fill: "#2d3a35" }}
             tickLine={false}
             axisLine={false}
             tickFormatter={(v: number) => formatNumberShort(v)}
@@ -115,3 +117,5 @@ export default function CompoundChart({ data }: Props) {
     </div>
   );
 }
+
+export default memo(CompoundChart);

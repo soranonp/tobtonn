@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import Script from "next/script";
+import { Fraunces, IBM_Plex_Sans_Thai, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -9,6 +10,29 @@ import BackToTop from "@/components/BackToTop";
 import GAPageView from "@/components/GAPageView";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+  weight: ["400", "500", "600", "700", "800"],
+  style: ["normal", "italic"],
+});
+
+const ibmPlex = IBM_Plex_Sans_Thai({
+  subsets: ["thai", "latin"],
+  display: "swap",
+  variable: "--font-body",
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono",
+  weight: ["400", "500", "600", "700"],
+  preload: false,
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tobtonn.com"),
@@ -126,13 +150,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="th">
+    <html
+      lang="th"
+      className={`${fraunces.variable} ${ibmPlex.variable} ${jetBrainsMono.variable}`}
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{ __html: consentDefaultScript }}
         />
         {GA_ID && (
           <>
+            <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
               strategy="afterInteractive"
@@ -143,16 +171,6 @@ gtag('config', '${GA_ID}', { send_page_view: false });`}
             </Script>
           </>
         )}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppLd) }}

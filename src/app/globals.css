@@ -3,16 +3,12 @@
 @theme {
   --color-bg: #f5f1e8;
   --color-ink: #0c1f1a;
-  --color-ink-soft: #4a5a55;
+  --color-ink-soft: #2d3a35;
   --color-accent: #0f4d3a;
   --color-accent-bright: #1a7a5a;
-  --color-gold: #c9a44c;
+  --color-gold: #a37e2c;
   --color-gold-soft: #e8d59e;
   --color-line: #d8d2c0;
-
-  --font-display: "Fraunces", serif;
-  --font-body: "IBM Plex Sans Thai", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
 }
 
 /* Foundation: prevent horizontal overflow site-wide */

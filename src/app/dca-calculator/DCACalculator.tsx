@@ -1,18 +1,14 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  CartesianGrid,
-  ResponsiveContainer,
-} from "recharts";
-import { formatNumber, formatNumberShort } from "@/lib/calculate";
-import ChartTooltip from "@/components/charts/ChartTooltip";
+import dynamic from "next/dynamic";
+import { formatNumber } from "@/lib/calculate";
+import ChartSkeleton from "@/components/charts/ChartSkeleton";
+
+const DCAChart = dynamic(() => import("@/components/charts/DCAChart"), {
+  ssr: false,
+  loading: () => <ChartSkeleton minHeight={340} />,
+});
 
 interface YearRow {
   year: number;
@@ -78,20 +74,38 @@ export default function DCACalculator() {
   const displayPeriod =
     months > 0 ? `${years} ปี ${months} เดือน` : `${years} ปี`;
 
+  const chartData = useMemo(
+    () =>
+      result
+        ? result.rows.map((r) => ({
+            name: String(r.year),
+            DCA: Math.round(r.dca),
+            "Lump Sum": Math.round(r.lumpSum),
+          }))
+        : [],
+    [result]
+  );
+
   return (
     <div className="grid items-start gap-8 lg:grid-cols-[380px_minmax(0,1fr)]">
       {/* Inputs */}
       <div className="min-w-0 rounded-2xl border border-line bg-white/60 p-4 shadow-sm backdrop-blur-sm sm:p-6">
         <div className="space-y-5">
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <label
+              htmlFor="dca-monthly"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               เงินลงทุนรายเดือน (DCA)
             </label>
             <div className="relative">
               <input
+                id="dca-monthly"
                 type="number"
+                inputMode="decimal"
                 value={monthly}
                 onChange={(e) => setMonthly(Number(e.target.value))}
+                aria-label="เงินลงทุนรายเดือน DCA (บาท)"
                 className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -101,15 +115,21 @@ export default function DCACalculator() {
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <label
+              htmlFor="dca-rate"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               อัตราผลตอบแทนต่อปี
             </label>
             <div className="relative">
               <input
+                id="dca-rate"
                 type="number"
+                inputMode="decimal"
                 value={rate}
                 onChange={(e) => setRate(Number(e.target.value))}
                 step={0.1}
+                aria-label="อัตราผลตอบแทนต่อปี (เปอร์เซ็นต์)"
                 className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -122,17 +142,26 @@ export default function DCACalculator() {
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <span
+              id="dca-period-label"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               ระยะเวลา
-            </label>
-            <div className="grid grid-cols-2 gap-3">
+            </span>
+            <div
+              role="group"
+              aria-labelledby="dca-period-label"
+              className="grid grid-cols-2 gap-3"
+            >
               <div className="relative min-w-0">
                 <input
+                  id="dca-years"
                   type="number"
                   inputMode="numeric"
                   value={years}
                   onChange={(e) => setYears(Number(e.target.value))}
                   min={0}
+                  aria-label="ระยะเวลา (ปี)"
                   className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -141,12 +170,14 @@ export default function DCACalculator() {
               </div>
               <div className="relative min-w-0">
                 <input
+                  id="dca-months"
                   type="number"
                   inputMode="numeric"
                   value={months}
                   onChange={(e) => setMonths(Number(e.target.value))}
                   min={0}
                   max={11}
+                  aria-label="ระยะเวลา (เดือนเพิ่มเติม)"
                   className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-12 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -245,64 +276,17 @@ export default function DCACalculator() {
 
           {/* Chart */}
           <div className="rounded-2xl border border-line bg-white/60 p-5 backdrop-blur-sm">
-            <h3 className="mb-4 font-display text-base font-semibold text-ink">
+            <h2 className="mb-4 font-display text-base font-semibold text-ink">
               กราฟการเติบโตของเงิน {compareLump && "(DCA vs Lump Sum)"}
-            </h3>
-            <div className="h-[340px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  data={result.rows.map((r) => ({
-                    name: String(r.year),
-                    DCA: Math.round(r.dca),
-                    "Lump Sum": Math.round(r.lumpSum),
-                  }))}
-                  margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
-                >
-                  <CartesianGrid stroke="#e5dfcc" strokeDasharray="3 3" />
-                  <XAxis
-                    dataKey="name"
-                    tick={{ fontSize: 12, fill: "#4a5a55" }}
-                    tickLine={false}
-                    axisLine={{ stroke: "#d8d2c0" }}
-                    tickFormatter={(v) => `ปี ${v}`}
-                  />
-                  <YAxis
-                    tick={{ fontSize: 12, fill: "#4a5a55" }}
-                    tickLine={false}
-                    axisLine={false}
-                    tickFormatter={(v: number) => formatNumberShort(v)}
-                  />
-                  <Tooltip content={<ChartTooltip showTotal={false} />} />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="DCA"
-                    stroke="#0f4d3a"
-                    strokeWidth={2.5}
-                    dot={false}
-                    activeDot={{ r: 5 }}
-                  />
-                  {compareLump && (
-                    <Line
-                      type="monotone"
-                      dataKey="Lump Sum"
-                      stroke="#c9a44c"
-                      strokeWidth={2.5}
-                      strokeDasharray="6 3"
-                      dot={false}
-                      activeDot={{ r: 5 }}
-                    />
-                  )}
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+            </h2>
+            <DCAChart data={chartData} showLumpSum={compareLump} />
           </div>
 
           {/* Table */}
           <div>
-            <h3 className="mb-3 font-display text-base font-semibold text-ink">
+            <h2 className="mb-3 font-display text-base font-semibold text-ink">
               ตารางรายปี
-            </h3>
+            </h2>
             <div className="table-wrap">
               <table className="text-sm">
                 <thead>

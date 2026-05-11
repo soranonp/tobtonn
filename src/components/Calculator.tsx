@@ -5,11 +5,11 @@ import dynamic from "next/dynamic";
 import { calculate, formatNumber } from "@/lib/calculate";
 import YearlyTable from "./YearlyTable";
 
-const CompoundChart = dynamic(() => import("./CompoundChart"), {
+import ChartSkeleton from "./charts/ChartSkeleton";
+
+const CompoundChart = dynamic(() => import("./charts/CompoundChart"), {
   ssr: false,
-  loading: () => (
-    <div className="h-[320px] w-full animate-pulse rounded-xl bg-line/30" />
-  ),
+  loading: () => <ChartSkeleton minHeight={320} />,
 });
 
 type Frequency = 1 | 12 | 365;
@@ -44,7 +44,10 @@ export default function Calculator() {
         <div className="space-y-5">
           {/* เงินต้น */}
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <label
+              htmlFor="ci-principal"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               เงินต้นเริ่มต้น
             </label>
             <div className="relative">
@@ -56,6 +59,7 @@ export default function Calculator() {
                 min={0}
                 value={principal}
                 onChange={(e) => setPrincipal(Number(e.target.value))}
+                aria-label="เงินต้นเริ่มต้น (บาท)"
                 className="h-12 w-full rounded-xl border border-line bg-white px-4 pr-14 font-mono text-base outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -66,14 +70,20 @@ export default function Calculator() {
 
           {/* DCA */}
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <label
+              htmlFor="ci-monthly"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               เงินลงทุนเพิ่มรายเดือน (DCA)
             </label>
             <div className="relative">
               <input
+                id="ci-monthly"
                 type="number"
+                inputMode="decimal"
                 value={monthly}
                 onChange={(e) => setMonthly(Number(e.target.value))}
+                aria-label="เงินลงทุนเพิ่มรายเดือน DCA (บาท)"
                 className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -87,15 +97,21 @@ export default function Calculator() {
 
           {/* อัตราผลตอบแทน */}
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <label
+              htmlFor="ci-rate"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               อัตราผลตอบแทนต่อปี
             </label>
             <div className="relative">
               <input
+                id="ci-rate"
                 type="number"
+                inputMode="decimal"
                 value={rate}
                 onChange={(e) => setRate(Number(e.target.value))}
                 step={0.1}
+                aria-label="อัตราผลตอบแทนต่อปี (เปอร์เซ็นต์)"
                 className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -106,17 +122,26 @@ export default function Calculator() {
 
           {/* ระยะเวลา */}
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <span
+              id="ci-period-label"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               ระยะเวลา
-            </label>
-            <div className="grid grid-cols-2 gap-3">
+            </span>
+            <div
+              role="group"
+              aria-labelledby="ci-period-label"
+              className="grid grid-cols-2 gap-3"
+            >
               <div className="relative min-w-0">
                 <input
+                  id="ci-years"
                   type="number"
                   inputMode="numeric"
                   value={years}
                   onChange={(e) => setYears(Number(e.target.value))}
                   min={0}
+                  aria-label="ระยะเวลา (ปี)"
                   className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -125,12 +150,14 @@ export default function Calculator() {
               </div>
               <div className="relative min-w-0">
                 <input
+                  id="ci-months"
                   type="number"
                   inputMode="numeric"
                   value={months}
                   onChange={(e) => setMonths(Number(e.target.value))}
                   min={0}
                   max={11}
+                  aria-label="ระยะเวลา (เดือนเพิ่มเติม)"
                   className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-12 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -142,12 +169,15 @@ export default function Calculator() {
 
           {/* ความถี่ทบต้น */}
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <span
+              id="ci-freq-label"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               ความถี่ในการทบต้น
-            </label>
+            </span>
             <div
               role="radiogroup"
-              aria-label="ความถี่ในการทบต้น"
+              aria-labelledby="ci-freq-label"
               className="grid grid-cols-3 gap-1 rounded-xl border border-line bg-white p-1"
             >
               {([
@@ -227,17 +257,17 @@ export default function Calculator() {
 
           {/* Chart */}
           <div className="rounded-2xl border border-line bg-white/60 p-5 backdrop-blur-sm">
-            <h3 className="mb-4 font-display text-base font-semibold text-ink">
+            <h2 className="mb-4 font-display text-base font-semibold text-ink">
               กราฟการเติบโตของเงิน
-            </h3>
+            </h2>
             <CompoundChart data={result.yearlyData} />
           </div>
 
           {/* Table */}
           <div>
-            <h3 className="mb-3 font-display text-base font-semibold text-ink">
+            <h2 className="mb-3 font-display text-base font-semibold text-ink">
               ตารางรายปี
-            </h3>
+            </h2>
             <YearlyTable data={result.yearlyData} />
           </div>
         </div>

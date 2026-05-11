@@ -1,18 +1,17 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  CartesianGrid,
-  ResponsiveContainer,
-} from "recharts";
-import { formatNumber, formatNumberShort } from "@/lib/calculate";
-import ChartTooltip from "@/components/charts/ChartTooltip";
+import dynamic from "next/dynamic";
+import { formatNumber } from "@/lib/calculate";
+import ChartSkeleton from "@/components/charts/ChartSkeleton";
+
+const RetirementChart = dynamic(
+  () => import("@/components/charts/RetirementChart"),
+  {
+    ssr: false,
+    loading: () => <ChartSkeleton minHeight={340} />,
+  }
+);
 
 interface YearRow {
   age: number;
@@ -133,50 +132,78 @@ export default function RetirementCalculator() {
 
   const yearsToRetire = retireAge - currentAge;
 
+  const chartData = useMemo(
+    () =>
+      result
+        ? result.rows.map((r) => ({
+            name: String(r.age),
+            เงินที่จะมี: Math.round(r.expected),
+            เงินที่ต้องการ: Math.round(r.needed),
+          }))
+        : [],
+    [result]
+  );
+
   return (
     <div className="grid items-start gap-8 lg:grid-cols-[400px_minmax(0,1fr)]">
       <div className="min-w-0 rounded-2xl border border-line bg-white/60 p-4 shadow-sm backdrop-blur-sm sm:p-6">
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-3">
             <div className="min-w-0">
-              <label className="mb-1.5 block text-sm font-medium text-ink">
+              <label
+                htmlFor="rt-current-age"
+                className="mb-1.5 block text-sm font-medium text-ink"
+              >
                 อายุปัจจุบัน
               </label>
               <input
+                id="rt-current-age"
                 type="number"
                 inputMode="numeric"
                 value={currentAge}
                 onChange={(e) => setCurrentAge(Number(e.target.value))}
                 min={0}
                 max={120}
+                aria-label="อายุปัจจุบัน (ปี)"
                 className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
             </div>
             <div className="min-w-0">
-              <label className="mb-1.5 block text-sm font-medium text-ink">
+              <label
+                htmlFor="rt-retire-age"
+                className="mb-1.5 block text-sm font-medium text-ink"
+              >
                 อายุที่จะเกษียณ
               </label>
               <input
+                id="rt-retire-age"
                 type="number"
                 inputMode="numeric"
                 value={retireAge}
                 onChange={(e) => setRetireAge(Number(e.target.value))}
                 min={0}
                 max={120}
+                aria-label="อายุที่จะเกษียณ (ปี)"
                 className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
             </div>
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <label
+              htmlFor="rt-expense"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               ค่าใช้จ่ายต่อเดือนหลังเกษียณ (วันนี้)
             </label>
             <div className="relative">
               <input
+                id="rt-expense"
                 type="number"
+                inputMode="decimal"
                 value={monthlyExpense}
                 onChange={(e) => setMonthlyExpense(Number(e.target.value))}
+                aria-label="ค่าใช้จ่ายต่อเดือนหลังเกษียณ ณ ค่าเงินวันนี้ (บาท)"
                 className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -189,14 +216,20 @@ export default function RetirementCalculator() {
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <label
+              htmlFor="rt-savings"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               เงินเก็บปัจจุบัน
             </label>
             <div className="relative">
               <input
+                id="rt-savings"
                 type="number"
+                inputMode="decimal"
                 value={currentSavings}
                 onChange={(e) => setCurrentSavings(Number(e.target.value))}
+                aria-label="เงินเก็บปัจจุบัน (บาท)"
                 className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -206,14 +239,20 @@ export default function RetirementCalculator() {
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <label
+              htmlFor="rt-monthly-savings"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               ออมเพิ่มได้ต่อเดือน
             </label>
             <div className="relative">
               <input
+                id="rt-monthly-savings"
                 type="number"
+                inputMode="decimal"
                 value={monthlySavings}
                 onChange={(e) => setMonthlySavings(Number(e.target.value))}
+                aria-label="ออมเพิ่มได้ต่อเดือน (บาท)"
                 className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -224,16 +263,21 @@ export default function RetirementCalculator() {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="min-w-0">
-              <label className="mb-1.5 block text-sm font-medium text-ink">
+              <label
+                htmlFor="rt-return"
+                className="mb-1.5 block text-sm font-medium text-ink"
+              >
                 ผลตอบแทนลงทุน
               </label>
               <div className="relative min-w-0">
                 <input
+                  id="rt-return"
                   type="number"
                   inputMode="decimal"
                   value={returnRate}
                   onChange={(e) => setReturnRate(Number(e.target.value))}
                   step={0.1}
+                  aria-label="ผลตอบแทนลงทุนต่อปี (เปอร์เซ็นต์)"
                   className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -242,16 +286,21 @@ export default function RetirementCalculator() {
               </div>
             </div>
             <div className="min-w-0">
-              <label className="mb-1.5 block text-sm font-medium text-ink">
+              <label
+                htmlFor="rt-inflation"
+                className="mb-1.5 block text-sm font-medium text-ink"
+              >
                 เงินเฟ้อ
               </label>
               <div className="relative min-w-0">
                 <input
+                  id="rt-inflation"
                   type="number"
                   inputMode="decimal"
                   value={inflation}
                   onChange={(e) => setInflation(Number(e.target.value))}
                   step={0.1}
+                  aria-label="อัตราเงินเฟ้อต่อปี (เปอร์เซ็นต์)"
                   className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -343,66 +392,17 @@ export default function RetirementCalculator() {
 
           {/* Chart */}
           <div className="rounded-2xl border border-line bg-white/60 p-5 backdrop-blur-sm">
-            <h3 className="mb-4 font-display text-base font-semibold text-ink">
+            <h2 className="mb-4 font-display text-base font-semibold text-ink">
               เงินที่จะมี vs เงินที่ต้องการ
-            </h3>
-            <div className="h-[340px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  data={result.rows.map((r) => ({
-                    name: String(r.age),
-                    "เงินที่จะมี": Math.round(r.expected),
-                    "เงินที่ต้องการ": Math.round(r.needed),
-                  }))}
-                  margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
-                >
-                  <CartesianGrid stroke="#e5dfcc" strokeDasharray="3 3" />
-                  <XAxis
-                    dataKey="name"
-                    tick={{ fontSize: 12, fill: "#4a5a55" }}
-                    tickLine={false}
-                    axisLine={{ stroke: "#d8d2c0" }}
-                    tickFormatter={(v) => `${v} ปี`}
-                  />
-                  <YAxis
-                    tick={{ fontSize: 12, fill: "#4a5a55" }}
-                    tickLine={false}
-                    axisLine={false}
-                    tickFormatter={(v: number) => formatNumberShort(v)}
-                  />
-                  <Tooltip
-                    content={
-                      <ChartTooltip labelPrefix="อายุ " labelSuffix=" ปี" />
-                    }
-                  />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="เงินที่จะมี"
-                    stroke="#0f4d3a"
-                    strokeWidth={2.5}
-                    dot={false}
-                    activeDot={{ r: 5 }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="เงินที่ต้องการ"
-                    stroke="#c9a44c"
-                    strokeWidth={2.5}
-                    strokeDasharray="6 3"
-                    dot={false}
-                    activeDot={{ r: 5 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+            </h2>
+            <RetirementChart data={chartData} />
           </div>
 
           {/* Table — every 5 years */}
           <div>
-            <h3 className="mb-3 font-display text-base font-semibold text-ink">
+            <h2 className="mb-3 font-display text-base font-semibold text-ink">
               ตารางทุก 5 ปี
-            </h3>
+            </h2>
             <div className="table-wrap">
               <table className="text-sm">
                 <thead>

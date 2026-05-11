@@ -1,18 +1,14 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  CartesianGrid,
-  ResponsiveContainer,
-} from "recharts";
+import dynamic from "next/dynamic";
 import { formatNumber, formatNumberShort } from "@/lib/calculate";
-import ChartTooltip from "@/components/charts/ChartTooltip";
+import ChartSkeleton from "@/components/charts/ChartSkeleton";
+
+const LoanChart = dynamic(() => import("@/components/charts/LoanChart"), {
+  ssr: false,
+  loading: () => <ChartSkeleton minHeight={320} />,
+});
 
 interface MonthRow {
   month: number;
@@ -193,6 +189,18 @@ export default function LoanCalculator() {
     return { base, withExtra, scenarios };
   }, [principal, rate, mode, minPercent, minBaht, fixedPayment, extra]);
 
+  const chartData = useMemo(
+    () =>
+      result
+        ? result.scenarios.map((s) => ({
+            name: s.label,
+            เงินต้น: Math.round(s.principal),
+            ดอกเบี้ย: s.diverged ? 0 : Math.round(s.interest),
+          }))
+        : [],
+    [result]
+  );
+
   const formatPeriod = (months: number) => {
     const y = Math.floor(months / 12);
     const m = months % 12;
@@ -206,14 +214,20 @@ export default function LoanCalculator() {
       <div className="min-w-0 rounded-2xl border border-line bg-white/60 p-4 shadow-sm backdrop-blur-sm sm:p-6">
         <div className="space-y-5">
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <label
+              htmlFor="loan-principal"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               ยอดหนี้ปัจจุบัน
             </label>
             <div className="relative">
               <input
+                id="loan-principal"
                 type="number"
+                inputMode="decimal"
                 value={principal}
                 onChange={(e) => setPrincipal(Number(e.target.value))}
+                aria-label="ยอดหนี้ปัจจุบัน (บาท)"
                 className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -223,15 +237,21 @@ export default function LoanCalculator() {
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <label
+              htmlFor="loan-rate"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               อัตราดอกเบี้ยต่อปี
             </label>
             <div className="relative">
               <input
+                id="loan-rate"
                 type="number"
+                inputMode="decimal"
                 value={rate}
                 onChange={(e) => setRate(Number(e.target.value))}
                 step={0.1}
+                aria-label="อัตราดอกเบี้ยต่อปี (เปอร์เซ็นต์)"
                 className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -244,10 +264,17 @@ export default function LoanCalculator() {
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <span
+              id="loan-mode-label"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               รูปแบบการจ่าย
-            </label>
-            <div className="grid grid-cols-2 gap-1 rounded-xl border border-line bg-white p-1">
+            </span>
+            <div
+              role="radiogroup"
+              aria-labelledby="loan-mode-label"
+              className="grid grid-cols-2 gap-1 rounded-xl border border-line bg-white p-1"
+            >
               {(
                 [
                   ["min", "จ่ายขั้นต่ำ"],
@@ -256,6 +283,9 @@ export default function LoanCalculator() {
               ).map(([val, label]) => (
                 <button
                   key={val}
+                  type="button"
+                  role="radio"
+                  aria-checked={mode === val}
                   onClick={() => setMode(val)}
                   className={`min-h-[44px] rounded-lg px-3 py-2 text-sm font-medium transition-all ${
                     mode === val
@@ -272,16 +302,21 @@ export default function LoanCalculator() {
           {mode === "min" ? (
             <div className="grid grid-cols-2 gap-3">
               <div className="min-w-0">
-                <label className="mb-1.5 block text-sm font-medium text-ink">
+                <label
+                  htmlFor="loan-min-percent"
+                  className="mb-1.5 block text-sm font-medium text-ink"
+                >
                   % ของยอด
                 </label>
                 <div className="relative min-w-0">
                   <input
+                    id="loan-min-percent"
                     type="number"
                     inputMode="decimal"
                     value={minPercent}
                     onChange={(e) => setMinPercent(Number(e.target.value))}
                     step={0.5}
+                    aria-label="ขั้นต่ำเป็นเปอร์เซ็นต์ของยอดหนี้"
                     className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                   />
                   <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -290,15 +325,20 @@ export default function LoanCalculator() {
                 </div>
               </div>
               <div className="min-w-0">
-                <label className="mb-1.5 block text-sm font-medium text-ink">
+                <label
+                  htmlFor="loan-min-baht"
+                  className="mb-1.5 block text-sm font-medium text-ink"
+                >
                   ขั้นต่ำสุด
                 </label>
                 <div className="relative min-w-0">
                   <input
+                    id="loan-min-baht"
                     type="number"
                     inputMode="numeric"
                     value={minBaht}
                     onChange={(e) => setMinBaht(Number(e.target.value))}
+                    aria-label="จำนวนเงินขั้นต่ำสุดต่อเดือน (บาท)"
                     className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-12 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                   />
                   <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -309,14 +349,20 @@ export default function LoanCalculator() {
             </div>
           ) : (
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-ink">
+              <label
+                htmlFor="loan-fixed"
+                className="mb-1.5 block text-sm font-medium text-ink"
+              >
                 จ่ายเดือนละ
               </label>
               <div className="relative">
                 <input
+                  id="loan-fixed"
                   type="number"
+                  inputMode="decimal"
                   value={fixedPayment}
                   onChange={(e) => setFixedPayment(Number(e.target.value))}
+                  aria-label="จำนวนเงินคงที่ที่จะจ่ายต่อเดือน (บาท)"
                   className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -327,14 +373,20 @@ export default function LoanCalculator() {
           )}
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
+            <label
+              htmlFor="loan-extra"
+              className="mb-1.5 block text-sm font-medium text-ink"
+            >
               จ่ายเพิ่ม (เปรียบเทียบ)
             </label>
             <div className="relative">
               <input
+                id="loan-extra"
                 type="number"
+                inputMode="decimal"
                 value={extra}
                 onChange={(e) => setExtra(Number(e.target.value))}
+                aria-label="จำนวนเงินที่จะจ่ายเพิ่มต่อเดือน (บาท)"
                 className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
               <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
@@ -421,58 +473,10 @@ export default function LoanCalculator() {
 
           {/* Chart - Compare scenarios */}
           <div className="rounded-2xl border border-line bg-white/60 p-5 backdrop-blur-sm">
-            <h3 className="mb-4 font-display text-base font-semibold text-ink">
+            <h2 className="mb-4 font-display text-base font-semibold text-ink">
               เปรียบเทียบ: จ่ายเพิ่มประหยัดดอกเบี้ยเท่าไหร่
-            </h3>
-            <div className="h-[320px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={result.scenarios.map((s) => ({
-                    name: s.label,
-                    เงินต้น: Math.round(s.principal),
-                    ดอกเบี้ย: s.diverged ? 0 : Math.round(s.interest),
-                  }))}
-                  margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
-                  barCategoryGap="20%"
-                >
-                  <CartesianGrid stroke="#e5dfcc" strokeDasharray="3 3" />
-                  <XAxis
-                    dataKey="name"
-                    tick={{ fontSize: 12, fill: "#4a5a55" }}
-                    tickLine={false}
-                    axisLine={{ stroke: "#d8d2c0" }}
-                  />
-                  <YAxis
-                    tick={{ fontSize: 12, fill: "#4a5a55" }}
-                    tickLine={false}
-                    axisLine={false}
-                    tickFormatter={(v: number) => formatNumberShort(v)}
-                  />
-                  <Tooltip
-                    content={
-                      <ChartTooltip
-                        labelPrefix=""
-                        showTotal={true}
-                        totalLabel="รวมจ่าย"
-                      />
-                    }
-                  />
-                  <Legend />
-                  <Bar
-                    dataKey="เงินต้น"
-                    stackId="a"
-                    fill="#0f4d3a"
-                    radius={[0, 0, 0, 0]}
-                  />
-                  <Bar
-                    dataKey="ดอกเบี้ย"
-                    stackId="a"
-                    fill="#c9a44c"
-                    radius={[4, 4, 0, 0]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+            </h2>
+            <LoanChart data={chartData} />
             <div className="mt-3 grid gap-2 text-xs text-ink-soft sm:grid-cols-4">
               {result.scenarios.map((s) => (
                 <div key={s.label} className="rounded-lg bg-accent/5 px-3 py-2">
@@ -487,14 +491,14 @@ export default function LoanCalculator() {
 
           {/* Amortization Table */}
           <div>
-            <h3 className="mb-3 font-display text-base font-semibold text-ink">
+            <h2 className="mb-3 font-display text-base font-semibold text-ink">
               ตารางผ่อนรายเดือน{" "}
               {result.base.rows.length >= 36 && (
                 <span className="text-xs font-normal text-ink-soft">
                   (แสดงทุก 3 เดือน)
                 </span>
               )}
-            </h3>
+            </h2>
             <div className="table-wrap">
               <table className="text-sm">
                 <thead>
