@@ -11,44 +11,29 @@ import GAPageView from "@/components/GAPageView";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
-// Critical: preloaded for above-the-fold rendering
+// Display: 700 for headings, 600 italic for emphasis inside headings
 const fraunces = Fraunces({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-display",
-  weight: ["700"],
+  weight: ["600", "700"],
+  style: ["normal", "italic"],
 });
 
+// Body: 400 baseline + 600 for semibold. Browser synthesizes 500/700.
 const ibmPlex = IBM_Plex_Sans_Thai({
   subsets: ["thai", "latin"],
   display: "swap",
   variable: "--font-body",
-  weight: ["400"],
+  weight: ["400", "600"],
 });
 
-// Extra weights / styles: registered but not preloaded — browser fetches on demand
-const fraunceExtras = Fraunces({
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["600"],
-  style: ["normal", "italic"],
-  preload: false,
-  adjustFontFallback: false,
-});
-
-const ibmPlexExtras = IBM_Plex_Sans_Thai({
-  subsets: ["thai", "latin"],
-  display: "swap",
-  weight: ["500", "700"],
-  preload: false,
-  adjustFontFallback: false,
-});
-
+// Mono: single weight 500 — used only for tabular numbers; not preloaded
 const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-mono",
-  weight: ["400", "500", "700"],
+  weight: ["500"],
   preload: false,
   adjustFontFallback: false,
 });
@@ -171,7 +156,7 @@ export default function RootLayout({
   return (
     <html
       lang="th"
-      className={`${fraunces.variable} ${ibmPlex.variable} ${jetBrainsMono.variable} ${fraunceExtras.className} ${ibmPlexExtras.className}`}
+      className={`${fraunces.variable} ${ibmPlex.variable} ${jetBrainsMono.variable}`}
     >
       <head>
         <script

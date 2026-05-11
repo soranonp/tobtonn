@@ -38,7 +38,8 @@
       "Bash(grep -rB0 -A0 \"font-display\" /Users/non_sonnon/Documents/tobtonn/src/ --include=\"*.tsx\")",
       "Bash(kill %1)",
       "Bash(wait)",
-      "Bash(pkill -f \"next-server\")"
+      "Bash(pkill -f \"next-server\")",
+      "Bash(sort -k5 -n)"
     ]
   }
 }
