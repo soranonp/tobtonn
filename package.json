@@ -8,7 +8,8 @@
     "build": "npm run generate:icons && next build",
     "start": "next start",
     "lint": "next lint",
-    "postbuild": "next-sitemap"
+    "postbuild": "next-sitemap && npm run sync-public",
+    "sync-public": "cp out/sitemap.xml public/sitemap.xml 2>/dev/null || true && cp out/robots.txt public/robots.txt 2>/dev/null || true"
   },
   "dependencies": {
     "date-fns": "^4.1.0",

@@ -92,11 +92,11 @@ export default function DCACalculatorPage() {
       />
 
       {/* Hero */}
-      <section className="px-4 pb-8 pt-12 text-center md:pt-16">
+      <section className="container-wrap pb-8 pt-10 text-center sm:pt-12 md:pt-16">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           DCA Calculator
         </p>
-        <h1 className="font-display text-3xl font-bold leading-tight text-ink md:text-4xl lg:text-5xl">
+        <h1 className="thai-heading font-display font-bold leading-[1.15] text-ink text-[clamp(28px,7vw,56px)]">
           คำนวณ <em className="text-accent">DCA</em> ลงทุนรายเดือน
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
@@ -105,22 +105,28 @@ export default function DCACalculatorPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-[1100px] px-4 pb-8">
-        <DCACalculator />
+      <section className="container-wrap pb-8">
+        <div className="mx-auto max-w-[1100px]">
+          <DCACalculator />
+        </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-8">
-        <FinancialDisclaimer />
+      <section className="container-wrap pb-8">
+        <div className="mx-auto max-w-3xl">
+          <FinancialDisclaimer />
+        </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-12">
-        <AdSlot id="dca-calc-below-result" size="horizontal" />
+      <section className="container-wrap pb-12">
+        <div className="mx-auto max-w-3xl">
+          <AdSlot id="dca-calc-below-result" size="horizontal" />
+        </div>
       </section>
 
       <ToolsGrid exclude="/dca-calculator" />
 
       {/* SEO Content */}
-      <div className="mx-auto max-w-[820px] space-y-16 px-4 pb-20">
+      <div className="container-wrap mx-auto max-w-[820px] space-y-16 pb-20">
         <section>
           <h2 className="mb-4 font-display text-2xl font-bold text-ink">
             DCA คืออะไร? ทำไมนักลงทุนมือใหม่ควรเริ่มที่ DCA
@@ -195,20 +201,20 @@ export default function DCACalculatorPage() {
           <p className="mb-4 leading-relaxed text-ink-soft">
             กองทุนยอดนิยมสำหรับ DCA ในประเทศไทย แบ่งตามดัชนีอ้างอิง:
           </p>
-          <div className="overflow-x-auto rounded-xl border border-line">
-            <table className="w-full text-sm">
+          <div className="table-wrap">
+            <table className="text-sm">
               <thead>
                 <tr className="border-b border-line bg-accent/5">
-                  <th className="px-4 py-3 text-left font-medium text-ink-soft">
+                  <th className="whitespace-nowrap px-4 py-3 text-left font-medium text-ink-soft">
                     ดัชนี / กลุ่ม
                   </th>
-                  <th className="px-4 py-3 text-left font-medium text-ink-soft">
+                  <th className="whitespace-nowrap px-4 py-3 text-left font-medium text-ink-soft">
                     ตัวอย่างกองทุน
                   </th>
-                  <th className="px-4 py-3 text-center font-medium text-ink-soft">
+                  <th className="whitespace-nowrap px-4 py-3 text-center font-medium text-ink-soft">
                     ผลตอบแทน 10 ปี*
                   </th>
-                  <th className="px-4 py-3 text-center font-medium text-ink-soft">
+                  <th className="whitespace-nowrap px-4 py-3 text-center font-medium text-ink-soft">
                     ค่าธรรมเนียม
                   </th>
                 </tr>

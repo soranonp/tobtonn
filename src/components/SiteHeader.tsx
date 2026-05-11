@@ -43,13 +43,31 @@ export default function SiteHeader() {
     setMobileOpen(false);
   }, [pathname]);
 
+  // Lock body scroll when mobile menu open
+  useEffect(() => {
+    if (mobileOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [mobileOpen]);
+
   const isActive = (href: string) => pathname === href;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-bg/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+    <header
+      className="sticky top-0 z-50 w-full border-b border-line bg-bg/85 backdrop-blur-md supports-[not_(backdrop-filter:blur(0))]:bg-bg"
+      style={{ maxWidth: "100vw" }}
+    >
+      <div className="container-wrap flex items-center justify-between py-3">
         {/* Logo */}
-        <Link href="/" className="flex items-center" aria-label="tobtonn — หน้าแรก">
+        <Link
+          href="/"
+          className="flex shrink-0 items-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+          aria-label="tobtonn — หน้าแรก"
+        >
           <Image
             src="/logo.svg"
             alt="tobtonn"
@@ -66,7 +84,9 @@ export default function SiteHeader() {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setToolsOpen(!toolsOpen)}
-              className={`flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent/5 ${
+              aria-expanded={toolsOpen}
+              aria-haspopup="menu"
+              className={`flex min-h-[44px] items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent/5 ${
                 calculatorLinks.some((l) => isActive(l.href))
                   ? "text-accent-bright"
                   : "text-ink-soft"
@@ -78,6 +98,7 @@ export default function SiteHeader() {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -88,11 +109,15 @@ export default function SiteHeader() {
               </svg>
             </button>
             {toolsOpen && (
-              <div className="absolute left-0 top-full mt-1 w-56 rounded-xl border border-line bg-bg/95 py-1 shadow-lg backdrop-blur-md">
+              <div
+                role="menu"
+                className="absolute left-0 top-full mt-1 w-56 rounded-xl border border-line bg-bg/95 py-1 shadow-lg backdrop-blur-md supports-[not_(backdrop-filter:blur(0))]:bg-bg"
+              >
                 {calculatorLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
+                    role="menuitem"
                     onClick={() => setToolsOpen(false)}
                     className={`block px-4 py-2.5 text-sm transition-colors hover:bg-accent/5 ${
                       isActive(link.href)
@@ -111,7 +136,7 @@ export default function SiteHeader() {
             <Link
               key={link.href}
               href={link.href}
-              className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent/5 ${
+              className={`flex min-h-[44px] items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent/5 ${
                 isActive(link.href) ? "text-accent-bright" : "text-ink-soft"
               }`}
             >
@@ -123,15 +148,17 @@ export default function SiteHeader() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="rounded-lg p-2 text-ink-soft hover:bg-accent/5 md:hidden"
-          aria-label="เมนู"
+          className="-mr-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-ink-soft hover:bg-accent/5 md:hidden"
+          aria-label={mobileOpen ? "ปิดเมนู" : "เปิดเมนู"}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
         >
           {mobileOpen ? (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           ) : (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           )}
@@ -140,11 +167,15 @@ export default function SiteHeader() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="border-t border-line bg-bg/95 backdrop-blur-md md:hidden">
-          <div className="px-4 py-3">
+        <div
+          id="mobile-menu"
+          className="border-t border-line bg-bg/95 backdrop-blur-md supports-[not_(backdrop-filter:blur(0))]:bg-bg md:hidden"
+        >
+          <div className="container-wrap py-3">
             <button
               onClick={() => setMobileToolsOpen(!mobileToolsOpen)}
-              className="flex w-full items-center justify-between py-2 text-sm font-medium text-ink-soft"
+              aria-expanded={mobileToolsOpen}
+              className="flex w-full min-h-[44px] items-center justify-between py-2 text-sm font-medium text-ink-soft"
             >
               เครื่องมือ
               <svg
@@ -152,6 +183,7 @@ export default function SiteHeader() {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                aria-hidden="true"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
@@ -162,7 +194,7 @@ export default function SiteHeader() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`block py-2 text-sm ${
+                    className={`flex min-h-[44px] items-center py-2 text-sm ${
                       isActive(link.href) ? "font-medium text-accent-bright" : "text-ink-soft"
                     }`}
                   >
@@ -175,7 +207,7 @@ export default function SiteHeader() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`block py-2 text-sm ${
+                className={`flex min-h-[44px] items-center py-2 text-sm ${
                   isActive(link.href) ? "font-medium text-accent-bright" : "text-ink-soft"
                 }`}
               >

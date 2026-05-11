@@ -39,16 +39,16 @@ export default function ToolsGrid({
 }: Props) {
   const tools = ALL_TOOLS.filter((t) => t.href !== exclude);
   return (
-    <section className="mx-auto max-w-5xl px-4 py-12">
+    <section className="container-wrap mx-auto max-w-5xl py-12">
       <h2 className="mb-6 text-center font-display text-2xl font-bold text-ink">
         {title}
       </h2>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 lg:grid-cols-4">
         {tools.map((tool) => (
           <Link
             key={tool.href}
             href={tool.href}
-            className="group rounded-xl border border-line bg-white/60 p-5 transition-all hover:border-accent/30 hover:shadow-md"
+            className="group flex min-h-[44px] flex-col rounded-xl border border-line bg-white/60 p-5 transition-all hover:border-accent/30 hover:shadow-md"
           >
             <h3 className="mb-1.5 font-display text-base font-semibold text-ink group-hover:text-accent">
               {tool.title}

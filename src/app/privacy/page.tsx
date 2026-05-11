@@ -32,12 +32,12 @@ export default function PrivacyPage() {
   return (
     <div className="bg-bg">
       {/* Hero */}
-      <section className="border-b border-line bg-white/40 px-4 py-14">
-        <div className="mx-auto max-w-[820px] text-center">
+      <section className="border-b border-line bg-white/40 py-12">
+        <div className="container-wrap mx-auto max-w-[820px] text-center">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
             Privacy Policy
           </p>
-          <h1 className="font-display text-3xl font-bold text-ink md:text-4xl">
+          <h1 className="thai-heading font-display font-bold text-ink text-[clamp(26px,5.5vw,40px)] leading-[1.2]">
             นโยบายความเป็นส่วนตัว
           </h1>
           <p className="mt-3 text-sm text-ink-soft">
@@ -46,7 +46,7 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <div className="mx-auto flex max-w-6xl gap-10 px-4 py-12">
+      <div className="container-wrap flex flex-col gap-10 py-12 lg:flex-row">
         {/* Sticky TOC (desktop) */}
         <aside className="hidden w-60 shrink-0 lg:block">
           <nav

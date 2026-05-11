@@ -78,11 +78,11 @@ export default function Home() {
       />
 
       {/* Hero */}
-      <section className="px-4 pb-8 pt-12 text-center md:pt-16">
+      <section className="container-wrap pb-8 pt-10 text-center sm:pt-12 md:pt-16">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           Compound Interest Calculator
         </p>
-        <h1 className="font-display text-3xl font-bold leading-tight text-ink md:text-4xl lg:text-5xl">
+        <h1 className="thai-heading font-display font-bold leading-[1.15] text-ink text-[clamp(28px,7vw,56px)]">
           โปรแกรมคำนวณ{" "}
           <em className="text-accent">ดอกเบี้ยทบต้น</em>
         </h1>
@@ -93,41 +93,49 @@ export default function Home() {
       </section>
 
       {/* Calculator */}
-      <section className="mx-auto max-w-[980px] px-4 pb-8">
-        <Calculator />
+      <section className="container-wrap pb-8">
+        <div className="mx-auto max-w-[980px]">
+          <Calculator />
+        </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-8">
-        <FinancialDisclaimer />
+      <section className="container-wrap pb-8">
+        <div className="mx-auto max-w-3xl">
+          <FinancialDisclaimer />
+        </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-12">
-        <AdSlot id="home-below-calc" size="horizontal" />
+      <section className="container-wrap pb-12">
+        <div className="mx-auto max-w-3xl">
+          <AdSlot id="home-below-calc" size="horizontal" />
+        </div>
       </section>
 
       {/* Tools Grid */}
-      <section className="mx-auto max-w-4xl px-4 pb-16">
-        <h2 className="mb-6 text-center font-display text-2xl font-bold text-ink">
-          เครื่องมือคำนวณอื่นๆ
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {tools.map((tool) => (
-            <Link
-              key={tool.href}
-              href={tool.href}
-              className="group rounded-xl border border-line bg-white/60 p-5 transition-all hover:border-accent/30 hover:shadow-md"
-            >
-              <h3 className="mb-1.5 font-display text-base font-semibold text-ink group-hover:text-accent">
-                {tool.title}
-              </h3>
-              <p className="text-sm text-ink-soft">{tool.desc}</p>
-            </Link>
-          ))}
+      <section className="container-wrap pb-16">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-6 text-center font-display text-2xl font-bold text-ink">
+            เครื่องมือคำนวณอื่นๆ
+          </h2>
+          <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 lg:grid-cols-4">
+            {tools.map((tool) => (
+              <Link
+                key={tool.href}
+                href={tool.href}
+                className="group flex min-h-[44px] flex-col rounded-xl border border-line bg-white/60 p-5 transition-all hover:border-accent/30 hover:shadow-md"
+              >
+                <h3 className="mb-1.5 font-display text-base font-semibold text-ink group-hover:text-accent">
+                  {tool.title}
+                </h3>
+                <p className="text-sm text-ink-soft">{tool.desc}</p>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* SEO Content */}
-      <div className="mx-auto max-w-[820px] space-y-16 px-4 pb-20">
+      <div className="container-wrap mx-auto max-w-[820px] space-y-16 pb-20">
         {/* ดอกเบี้ยทบต้นคืออะไร */}
         <section>
           <h2 className="mb-4 font-display text-2xl font-bold text-ink">
@@ -218,17 +226,17 @@ export default function Home() {
           <h3 className="mb-3 font-display text-lg font-semibold text-ink">
             อัตราผลตอบแทนตามประเภทสินทรัพย์
           </h3>
-          <div className="overflow-x-auto rounded-xl border border-line">
-            <table className="w-full text-sm">
+          <div className="table-wrap">
+            <table className="text-sm">
               <thead>
                 <tr className="border-b border-line bg-accent/5">
-                  <th className="px-4 py-3 text-left font-medium text-ink-soft">
+                  <th className="whitespace-nowrap px-4 py-3 text-left font-medium text-ink-soft">
                     ประเภทสินทรัพย์
                   </th>
-                  <th className="px-4 py-3 text-center font-medium text-ink-soft">
+                  <th className="whitespace-nowrap px-4 py-3 text-center font-medium text-ink-soft">
                     ผลตอบแทนเฉลี่ย/ปี
                   </th>
-                  <th className="px-4 py-3 text-center font-medium text-ink-soft">
+                  <th className="whitespace-nowrap px-4 py-3 text-center font-medium text-ink-soft">
                     ความเสี่ยง
                   </th>
                 </tr>
@@ -239,11 +247,11 @@ export default function Home() {
                     key={asset.name}
                     className="border-b border-line last:border-b-0"
                   >
-                    <td className="px-4 py-2.5">{asset.name}</td>
-                    <td className="px-4 py-2.5 text-center font-mono">
+                    <td className="whitespace-nowrap px-4 py-2.5">{asset.name}</td>
+                    <td className="whitespace-nowrap px-4 py-2.5 text-center font-mono">
                       {asset.rate}
                     </td>
-                    <td className="px-4 py-2.5 text-center text-ink-soft">
+                    <td className="whitespace-nowrap px-4 py-2.5 text-center text-ink-soft">
                       {asset.risk}
                     </td>
                   </tr>
@@ -268,8 +276,8 @@ export default function Home() {
 
       {/* Latest blog posts */}
       {latestPosts.length > 0 && (
-        <section className="mx-auto max-w-6xl px-4 pb-20">
-          <div className="mb-6 flex items-end justify-between">
+        <section className="container-wrap pb-20">
+          <div className="mb-6 flex items-end justify-between gap-3">
             <h2 className="font-display text-2xl font-bold text-ink">
               บทความล่าสุด
             </h2>
@@ -280,7 +288,7 @@ export default function Home() {
               ดูทั้งหมด →
             </Link>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 min-[480px]:grid-cols-2 lg:grid-cols-3">
             {latestPosts.map((post) => (
               <Link
                 key={post.slug}

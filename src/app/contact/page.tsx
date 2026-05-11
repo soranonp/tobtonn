@@ -77,13 +77,12 @@ export default function ContactPage() {
   return (
     <div className="bg-bg">
       {/* Hero */}
-      <section className="px-4 pb-10 pt-14 text-center md:pt-20">
+      <section className="container-wrap pb-10 pt-12 text-center md:pt-20">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           Contact
         </p>
-        <h1 className="mx-auto max-w-3xl font-display text-3xl font-bold leading-tight text-ink md:text-4xl lg:text-5xl">
+        <h1 className="thai-heading mx-auto max-w-3xl font-display font-bold leading-[1.15] text-ink text-[clamp(26px,6vw,52px)]">
           มีคำถาม ข้อเสนอแนะ
-          <br />
           หรืออยากให้เพิ่ม<em className="text-accent">เครื่องมือ?</em>
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
@@ -92,8 +91,8 @@ export default function ContactPage() {
       </section>
 
       {/* Two-col */}
-      <section className="mx-auto max-w-5xl px-4 pb-14">
-        <div className="grid gap-8 md:grid-cols-5">
+      <section className="container-wrap mx-auto max-w-5xl pb-14">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-5">
           {/* Form */}
           <div className="md:col-span-3">
             <h2 className="mb-4 font-display text-xl font-bold text-ink">
@@ -142,7 +141,7 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ */}
-      <section className="mx-auto max-w-3xl px-4 pb-20">
+      <section className="container-wrap mx-auto max-w-3xl pb-20">
         <h2 className="mb-6 text-center font-display text-2xl font-bold text-ink">
           คำถามที่พบบ่อย
         </h2>

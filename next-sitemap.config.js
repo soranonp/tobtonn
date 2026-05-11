@@ -16,8 +16,10 @@ const PRIORITY = {
 module.exports = {
   siteUrl: SITE_URL,
   generateRobotsTxt: true,
+  generateIndexSitemap: false,
+  sitemapSize: 7000,
   outDir: "./out",
-  exclude: ["/404", "/server-sitemap.xml"],
+  exclude: ["/404", "/api/*"],
   transform: async (config, path) => {
     const override = PRIORITY[path];
     if (override) {

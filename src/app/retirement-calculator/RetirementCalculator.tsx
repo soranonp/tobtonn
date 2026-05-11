@@ -134,34 +134,36 @@ export default function RetirementCalculator() {
   const yearsToRetire = retireAge - currentAge;
 
   return (
-    <div className="grid items-start gap-8 lg:grid-cols-[400px_1fr]">
-      <div className="rounded-2xl border border-line bg-white/60 p-6 shadow-sm backdrop-blur-sm">
+    <div className="grid items-start gap-8 lg:grid-cols-[400px_minmax(0,1fr)]">
+      <div className="min-w-0 rounded-2xl border border-line bg-white/60 p-4 shadow-sm backdrop-blur-sm sm:p-6">
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-3">
-            <div>
+            <div className="min-w-0">
               <label className="mb-1.5 block text-sm font-medium text-ink">
                 อายุปัจจุบัน
               </label>
               <input
                 type="number"
+                inputMode="numeric"
                 value={currentAge}
                 onChange={(e) => setCurrentAge(Number(e.target.value))}
                 min={0}
                 max={120}
-                className="w-full rounded-xl border border-line bg-white px-4 py-3 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
             </div>
-            <div>
+            <div className="min-w-0">
               <label className="mb-1.5 block text-sm font-medium text-ink">
                 อายุที่จะเกษียณ
               </label>
               <input
                 type="number"
+                inputMode="numeric"
                 value={retireAge}
                 onChange={(e) => setRetireAge(Number(e.target.value))}
                 min={0}
                 max={120}
-                className="w-full rounded-xl border border-line bg-white px-4 py-3 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
             </div>
           </div>
@@ -175,9 +177,9 @@ export default function RetirementCalculator() {
                 type="number"
                 value={monthlyExpense}
                 onChange={(e) => setMonthlyExpense(Number(e.target.value))}
-                className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                 บาท
               </span>
             </div>
@@ -195,9 +197,9 @@ export default function RetirementCalculator() {
                 type="number"
                 value={currentSavings}
                 onChange={(e) => setCurrentSavings(Number(e.target.value))}
-                className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                 บาท
               </span>
             </div>
@@ -212,45 +214,47 @@ export default function RetirementCalculator() {
                 type="number"
                 value={monthlySavings}
                 onChange={(e) => setMonthlySavings(Number(e.target.value))}
-                className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                 บาท
               </span>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <div>
+            <div className="min-w-0">
               <label className="mb-1.5 block text-sm font-medium text-ink">
                 ผลตอบแทนลงทุน
               </label>
-              <div className="relative">
+              <div className="relative min-w-0">
                 <input
                   type="number"
+                  inputMode="decimal"
                   value={returnRate}
                   onChange={(e) => setReturnRate(Number(e.target.value))}
                   step={0.1}
-                  className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                  className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                   %
                 </span>
               </div>
             </div>
-            <div>
+            <div className="min-w-0">
               <label className="mb-1.5 block text-sm font-medium text-ink">
                 เงินเฟ้อ
               </label>
-              <div className="relative">
+              <div className="relative min-w-0">
                 <input
                   type="number"
+                  inputMode="decimal"
                   value={inflation}
                   onChange={(e) => setInflation(Number(e.target.value))}
                   step={0.1}
-                  className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                  className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                   %
                 </span>
               </div>
@@ -265,7 +269,7 @@ export default function RetirementCalculator() {
       </div>
 
       {result && yearsToRetire > 0 && (
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <p className="text-sm text-ink-soft">
             อีก{" "}
             <span className="font-semibold text-ink">{yearsToRetire}</span> ปี
@@ -399,8 +403,8 @@ export default function RetirementCalculator() {
             <h3 className="mb-3 font-display text-base font-semibold text-ink">
               ตารางทุก 5 ปี
             </h3>
-            <div className="overflow-x-auto rounded-xl border border-line">
-              <table className="w-full min-w-[500px] text-sm">
+            <div className="table-wrap">
+              <table className="text-sm">
                 <thead>
                   <tr className="border-b border-line bg-accent/5">
                     <th className="px-4 py-3 text-left font-medium text-ink-soft">

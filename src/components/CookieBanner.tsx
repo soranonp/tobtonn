@@ -114,6 +114,7 @@ export default function CookieBanner() {
           aria-live="polite"
           aria-label="การตั้งค่าคุกกี้"
           className="fixed inset-x-0 bottom-0 z-[60] flex justify-center px-4 pb-4 sm:pb-6"
+          style={{ paddingBottom: "max(env(safe-area-inset-bottom), 16px)" }}
         >
           <div
             className="w-full max-w-[540px] rounded-2xl border border-line bg-white p-5 shadow-2xl animate-cookie-slide"

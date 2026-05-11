@@ -90,11 +90,11 @@ export default function LoanCalculatorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
 
-      <section className="px-4 pb-8 pt-12 text-center md:pt-16">
+      <section className="container-wrap pb-8 pt-10 text-center sm:pt-12 md:pt-16">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           Loan & Credit Card Calculator
         </p>
-        <h1 className="font-display text-3xl font-bold leading-tight text-ink md:text-4xl lg:text-5xl">
+        <h1 className="thai-heading font-display font-bold leading-[1.15] text-ink text-[clamp(28px,7vw,56px)]">
           คำนวณ <em className="text-accent">ดอกเบี้ยเงินกู้</em>
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
@@ -103,21 +103,27 @@ export default function LoanCalculatorPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-[1100px] px-4 pb-8">
-        <LoanCalculator />
+      <section className="container-wrap pb-8">
+        <div className="mx-auto max-w-[1100px]">
+          <LoanCalculator />
+        </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-8">
-        <FinancialDisclaimer />
+      <section className="container-wrap pb-8">
+        <div className="mx-auto max-w-3xl">
+          <FinancialDisclaimer />
+        </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-12">
-        <AdSlot id="loan-calc-below-result" size="horizontal" />
+      <section className="container-wrap pb-12">
+        <div className="mx-auto max-w-3xl">
+          <AdSlot id="loan-calc-below-result" size="horizontal" />
+        </div>
       </section>
 
       <ToolsGrid exclude="/loan-calculator" />
 
-      <div className="mx-auto max-w-[820px] space-y-16 px-4 pb-20">
+      <div className="container-wrap mx-auto max-w-[820px] space-y-16 pb-20">
         <section>
           <h2 className="mb-4 font-display text-2xl font-bold text-ink">
             ดอกเบี้ยทบต้นในการกู้ยืม — ทำไมหนี้บัตรน่ากลัว
@@ -211,8 +217,8 @@ export default function LoanCalculatorPage() {
           <h2 className="mb-4 font-display text-2xl font-bold text-ink">
             อัตราดอกเบี้ยเงินกู้ที่พบบ่อยในไทย 2026
           </h2>
-          <div className="overflow-x-auto rounded-xl border border-line">
-            <table className="w-full text-sm">
+          <div className="table-wrap">
+            <table className="text-sm">
               <thead>
                 <tr className="border-b border-line bg-accent/5">
                   <th className="px-4 py-3 text-left font-medium text-ink-soft">

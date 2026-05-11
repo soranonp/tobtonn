@@ -33,7 +33,7 @@ const QUICK_LINKS = [
 export default function NotFound() {
   return (
     <div className="bg-bg">
-      <section className="px-4 pb-12 pt-16 text-center md:pt-24">
+      <section className="container-wrap pb-12 pt-16 text-center md:pt-24">
         <p
           className="font-display italic text-accent leading-none"
           style={{ fontSize: "clamp(96px, 22vw, 200px)", fontWeight: 200 }}
@@ -48,8 +48,8 @@ export default function NotFound() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-4xl px-4 pb-12">
-        <div className="grid gap-4 sm:grid-cols-2">
+      <section className="container-wrap mx-auto max-w-4xl pb-12">
+        <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2">
           {QUICK_LINKS.map((tool) => (
             <Link
               key={tool.href}
@@ -67,7 +67,7 @@ export default function NotFound() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-20 text-center">
+      <section className="container-wrap mx-auto max-w-3xl pb-20 text-center">
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
             href="/"

@@ -30,7 +30,9 @@
       "Bash(curl -s http://localhost:3000/site.webmanifest -o /dev/null -w \"GET /site.webmanifest: %{http_code}\\\\n\")",
       "Bash(curl -s http://localhost:3000/)",
       "Bash(curl *)",
-      "Bash(awk 'NR>3 {tot+=$5; print $5\"\\\\t\"$NF} END {print \"---\"; print tot/1024\" KB total\"}')"
+      "Bash(awk 'NR>3 {tot+=$5; print $5\"\\\\t\"$NF} END {print \"---\"; print tot/1024\" KB total\"}')",
+      "Bash(npx next *)",
+      "Bash(lsof -iTCP:3000 -sTCP:LISTEN -P)"
     ]
   }
 }

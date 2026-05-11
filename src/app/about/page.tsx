@@ -42,11 +42,11 @@ export default function AboutPage() {
   return (
     <div className="bg-bg">
       {/* Hero */}
-      <section className="px-4 pb-10 pt-14 text-center md:pt-20">
+      <section className="container-wrap pb-10 pt-12 text-center md:pt-20">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           About tobtonn.com
         </p>
-        <h1 className="mx-auto max-w-3xl font-display text-3xl font-bold leading-tight text-ink md:text-4xl lg:text-5xl">
+        <h1 className="thai-heading mx-auto max-w-3xl font-display font-bold leading-[1.15] text-ink text-[clamp(26px,6vw,52px)]">
           เครื่องมือวางแผนการเงินที่{" "}
           <em className="text-accent">ใช้ง่าย ฟรี</em>{" "}
           ไม่ต้องสมัครสมาชิก
@@ -58,8 +58,8 @@ export default function AboutPage() {
       </section>
 
       {/* Mission */}
-      <section className="mx-auto max-w-[820px] px-4 pb-12">
-        <div className="rounded-2xl border border-line bg-white/60 p-8">
+      <section className="container-wrap mx-auto max-w-[820px] pb-12">
+        <div className="rounded-2xl border border-line bg-white/60 p-6 sm:p-8">
           <h2 className="mb-4 font-display text-2xl font-bold text-ink">
             พันธกิจของเรา
           </h2>
@@ -78,11 +78,11 @@ export default function AboutPage() {
       </section>
 
       {/* Why us */}
-      <section className="mx-auto max-w-5xl px-4 pb-14">
+      <section className="container-wrap mx-auto max-w-5xl pb-14">
         <h2 className="mb-6 text-center font-display text-2xl font-bold text-ink">
           ทำไมต้องใช้เว็บนี้
         </h2>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2">
           {reasons.map((r) => (
             <div
               key={r.title}
@@ -98,8 +98,8 @@ export default function AboutPage() {
       </section>
 
       {/* Disclaimer */}
-      <section className="mx-auto max-w-[820px] px-4 pb-14">
-        <div className="rounded-2xl border border-gold-soft/60 bg-gold-soft/30 p-7">
+      <section className="container-wrap mx-auto max-w-[820px] pb-14">
+        <div className="rounded-2xl border border-gold-soft/60 bg-gold-soft/30 p-6 sm:p-7">
           <h2 className="mb-3 font-display text-xl font-bold text-ink">
             ข้อจำกัดความรับผิดชอบ (Disclaimer)
           </h2>
@@ -121,8 +121,8 @@ export default function AboutPage() {
       </section>
 
       {/* Stats */}
-      <section className="mx-auto max-w-4xl px-4 pb-14">
-        <div className="grid gap-4 rounded-2xl bg-ink p-8 text-center sm:grid-cols-3">
+      <section className="container-wrap mx-auto max-w-4xl pb-14">
+        <div className="grid grid-cols-1 gap-4 rounded-2xl bg-ink p-6 text-center sm:grid-cols-3 sm:p-8">
           <div>
             <p className="font-display text-3xl font-bold text-gold md:text-4xl">
               5+
@@ -145,7 +145,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-3xl px-4 pb-20 text-center">
+      <section className="container-wrap mx-auto max-w-3xl pb-20 text-center">
         <h2 className="mb-3 font-display text-2xl font-bold text-ink">
           พร้อมวางแผนการเงินของคุณแล้วหรือยัง?
         </h2>

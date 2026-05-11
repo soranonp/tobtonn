@@ -79,9 +79,9 @@ export default function DCACalculator() {
     months > 0 ? `${years} ปี ${months} เดือน` : `${years} ปี`;
 
   return (
-    <div className="grid items-start gap-8 lg:grid-cols-[380px_1fr]">
+    <div className="grid items-start gap-8 lg:grid-cols-[380px_minmax(0,1fr)]">
       {/* Inputs */}
-      <div className="rounded-2xl border border-line bg-white/60 p-6 shadow-sm backdrop-blur-sm">
+      <div className="min-w-0 rounded-2xl border border-line bg-white/60 p-4 shadow-sm backdrop-blur-sm sm:p-6">
         <div className="space-y-5">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-ink">
@@ -92,9 +92,9 @@ export default function DCACalculator() {
                 type="number"
                 value={monthly}
                 onChange={(e) => setMonthly(Number(e.target.value))}
-                className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                 บาท
               </span>
             </div>
@@ -110,9 +110,9 @@ export default function DCACalculator() {
                 value={rate}
                 onChange={(e) => setRate(Number(e.target.value))}
                 step={0.1}
-                className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                 %
               </span>
             </div>
@@ -126,28 +126,30 @@ export default function DCACalculator() {
               ระยะเวลา
             </label>
             <div className="grid grid-cols-2 gap-3">
-              <div className="relative">
+              <div className="relative min-w-0">
                 <input
                   type="number"
+                  inputMode="numeric"
                   value={years}
                   onChange={(e) => setYears(Number(e.target.value))}
                   min={0}
-                  className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                  className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                   ปี
                 </span>
               </div>
-              <div className="relative">
+              <div className="relative min-w-0">
                 <input
                   type="number"
+                  inputMode="numeric"
                   value={months}
                   onChange={(e) => setMonths(Number(e.target.value))}
                   min={0}
                   max={11}
-                  className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                  className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-12 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                   เดือน
                 </span>
               </div>
@@ -175,7 +177,7 @@ export default function DCACalculator() {
 
       {/* Results */}
       {result && (
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <p className="text-sm text-ink-soft">
             DCA เดือนละ{" "}
             <span className="font-semibold text-ink">
@@ -301,8 +303,8 @@ export default function DCACalculator() {
             <h3 className="mb-3 font-display text-base font-semibold text-ink">
               ตารางรายปี
             </h3>
-            <div className="overflow-x-auto rounded-xl border border-line">
-              <table className="w-full min-w-[600px] text-sm">
+            <div className="table-wrap">
+              <table className="text-sm">
                 <thead>
                   <tr className="border-b border-line bg-accent/5">
                     <th className="px-4 py-3 text-left font-medium text-ink-soft">

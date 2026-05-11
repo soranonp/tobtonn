@@ -59,8 +59,11 @@ export default function SiteFooter() {
     ...navLinks,
   ];
   return (
-    <footer className="border-t-4 border-gold bg-ink text-bg/70">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <footer
+      className="border-t-4 border-gold bg-ink text-bg/70"
+      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+    >
+      <div className="container-wrap grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         {/* Brand */}
         <div>
           <div className="mb-3">
@@ -152,12 +155,14 @@ export default function SiteFooter() {
         </div>
       </div>
 
-      <div className="border-t border-white/10 px-6 py-5 text-center text-xs text-bg/40">
-        <p>© 2026 tobtonn.com — สงวนลิขสิทธิ์</p>
-        <p className="mt-1">
-          ผลลัพธ์จากเครื่องมือนี้เป็นเพียงการประมาณการเท่านั้น
-          ไม่ใช่คำแนะนำทางการเงิน กรุณาปรึกษาผู้เชี่ยวชาญก่อนตัดสินใจลงทุน
-        </p>
+      <div className="border-t border-white/10">
+        <div className="container-wrap py-5 text-center text-xs text-bg/40">
+          <p>© 2026 tobtonn.com — สงวนลิขสิทธิ์</p>
+          <p className="mt-1">
+            ผลลัพธ์จากเครื่องมือนี้เป็นเพียงการประมาณการเท่านั้น
+            ไม่ใช่คำแนะนำทางการเงิน กรุณาปรึกษาผู้เชี่ยวชาญก่อนตัดสินใจลงทุน
+          </p>
+        </div>
       </div>
     </footer>
   );

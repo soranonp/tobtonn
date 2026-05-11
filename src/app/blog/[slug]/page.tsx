@@ -148,7 +148,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
 
-      <article className="mx-auto max-w-[1200px] px-4 pb-20 pt-8">
+      <article className="container-wrap pb-20 pt-8" style={{ maxWidth: 1200 }}>
         {/* Breadcrumb */}
         <nav
           aria-label="breadcrumb"
@@ -188,7 +188,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               <span className="mb-4 inline-flex items-center rounded-full border border-accent/20 bg-accent/5 px-3 py-1 text-xs font-medium text-accent">
                 {post.tag}
               </span>
-              <h1 className="mb-5 font-display text-3xl font-bold leading-tight text-ink md:text-4xl lg:text-[2.5rem]">
+              <h1 className="thai-heading mb-5 font-display font-bold leading-[1.2] text-ink text-[clamp(26px,5.5vw,40px)]">
                 {post.title}
               </h1>
               <div className="flex flex-wrap items-center gap-3 text-sm text-ink-soft">
@@ -283,7 +283,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 <h2 className="mb-5 font-display text-xl font-bold text-ink">
                   บทความที่เกี่ยวข้อง
                 </h2>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 lg:grid-cols-3">
                   {related.map((p) => (
                     <Link
                       key={p.slug}

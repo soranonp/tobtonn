@@ -6,8 +6,8 @@ interface Props {
 
 export default function YearlyTable({ data }: Props) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-line">
-      <table className="w-full min-w-[600px] text-sm">
+    <div className="table-wrap">
+      <table className="text-sm">
         <thead>
           <tr className="border-b border-line bg-accent/5">
             <th className="px-4 py-3 text-left font-medium text-ink-soft">

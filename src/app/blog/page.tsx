@@ -65,11 +65,11 @@ export default function BlogIndexPage() {
       />
 
       {/* Hero */}
-      <section className="px-4 pb-10 pt-12 text-center md:pt-16">
+      <section className="container-wrap pb-10 pt-10 text-center sm:pt-12 md:pt-16">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           Blog
         </p>
-        <h1 className="font-display text-3xl font-bold leading-tight text-ink md:text-4xl lg:text-5xl">
+        <h1 className="thai-heading font-display font-bold leading-[1.15] text-ink text-[clamp(28px,7vw,56px)]">
           บทความความรู้{" "}
           <em className="text-accent">การเงิน-การลงทุน</em>
         </h1>
@@ -80,8 +80,8 @@ export default function BlogIndexPage() {
       </section>
 
       {/* Posts grid */}
-      <section className="mx-auto max-w-6xl px-4 pb-20">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="container-wrap pb-20">
+        <div className="grid grid-cols-1 gap-6 min-[480px]:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <Link
               key={post.slug}

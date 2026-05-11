@@ -89,11 +89,11 @@ export default function SavingsCalculatorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
 
-      <section className="px-4 pb-8 pt-12 text-center md:pt-16">
+      <section className="container-wrap pb-8 pt-10 text-center sm:pt-12 md:pt-16">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           Savings Goal Calculator
         </p>
-        <h1 className="font-display text-3xl font-bold leading-tight text-ink md:text-4xl lg:text-5xl">
+        <h1 className="thai-heading font-display font-bold leading-[1.15] text-ink text-[clamp(28px,7vw,56px)]">
           คำนวณ <em className="text-accent">เงินออม</em> ให้ถึงเป้า
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
@@ -102,21 +102,27 @@ export default function SavingsCalculatorPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-[1100px] px-4 pb-8">
-        <SavingsCalculator />
+      <section className="container-wrap pb-8">
+        <div className="mx-auto max-w-[1100px]">
+          <SavingsCalculator />
+        </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-8">
-        <FinancialDisclaimer />
+      <section className="container-wrap pb-8">
+        <div className="mx-auto max-w-3xl">
+          <FinancialDisclaimer />
+        </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-12">
-        <AdSlot id="savings-calc-below-result" size="horizontal" />
+      <section className="container-wrap pb-12">
+        <div className="mx-auto max-w-3xl">
+          <AdSlot id="savings-calc-below-result" size="horizontal" />
+        </div>
       </section>
 
       <ToolsGrid exclude="/savings-calculator" />
 
-      <div className="mx-auto max-w-[820px] space-y-16 px-4 pb-20">
+      <div className="container-wrap mx-auto max-w-[820px] space-y-16 pb-20">
         <section>
           <h2 className="mb-4 font-display text-2xl font-bold text-ink">
             วิธีตั้งเป้าหมายการออม (กฎ 50/30/20)
@@ -170,8 +176,8 @@ export default function SavingsCalculatorPage() {
             ปี ที่ดอกเบี้ย 1.5% vs 5% ต่างกันถึง 1.4 ล้านบาท การเลือกบัญชี
             ที่เหมาะสมจึงสำคัญพอๆ กับการออมต่อเนื่อง:
           </p>
-          <div className="overflow-x-auto rounded-xl border border-line">
-            <table className="w-full text-sm">
+          <div className="table-wrap">
+            <table className="text-sm">
               <thead>
                 <tr className="border-b border-line bg-accent/5">
                   <th className="px-4 py-3 text-left font-medium text-ink-soft">

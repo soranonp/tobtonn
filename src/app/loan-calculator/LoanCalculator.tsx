@@ -202,8 +202,8 @@ export default function LoanCalculator() {
   };
 
   return (
-    <div className="grid items-start gap-8 lg:grid-cols-[400px_1fr]">
-      <div className="rounded-2xl border border-line bg-white/60 p-6 shadow-sm backdrop-blur-sm">
+    <div className="grid items-start gap-8 lg:grid-cols-[400px_minmax(0,1fr)]">
+      <div className="min-w-0 rounded-2xl border border-line bg-white/60 p-4 shadow-sm backdrop-blur-sm sm:p-6">
         <div className="space-y-5">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-ink">
@@ -214,9 +214,9 @@ export default function LoanCalculator() {
                 type="number"
                 value={principal}
                 onChange={(e) => setPrincipal(Number(e.target.value))}
-                className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                 บาท
               </span>
             </div>
@@ -232,9 +232,9 @@ export default function LoanCalculator() {
                 value={rate}
                 onChange={(e) => setRate(Number(e.target.value))}
                 step={0.1}
-                className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                 %
               </span>
             </div>
@@ -247,7 +247,7 @@ export default function LoanCalculator() {
             <label className="mb-1.5 block text-sm font-medium text-ink">
               รูปแบบการจ่าย
             </label>
-            <div className="grid grid-cols-2 gap-0 rounded-xl border border-line bg-white p-1">
+            <div className="grid grid-cols-2 gap-1 rounded-xl border border-line bg-white p-1">
               {(
                 [
                   ["min", "จ่ายขั้นต่ำ"],
@@ -257,7 +257,7 @@ export default function LoanCalculator() {
                 <button
                   key={val}
                   onClick={() => setMode(val)}
-                  className={`rounded-lg px-3 py-2 text-sm font-medium transition-all ${
+                  className={`min-h-[44px] rounded-lg px-3 py-2 text-sm font-medium transition-all ${
                     mode === val
                       ? "bg-accent text-white shadow-sm"
                       : "text-ink-soft hover:bg-accent/5"
@@ -271,35 +271,37 @@ export default function LoanCalculator() {
 
           {mode === "min" ? (
             <div className="grid grid-cols-2 gap-3">
-              <div>
+              <div className="min-w-0">
                 <label className="mb-1.5 block text-sm font-medium text-ink">
                   % ของยอด
                 </label>
-                <div className="relative">
+                <div className="relative min-w-0">
                   <input
                     type="number"
+                    inputMode="decimal"
                     value={minPercent}
                     onChange={(e) => setMinPercent(Number(e.target.value))}
                     step={0.5}
-                    className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                    className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                   />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                     %
                   </span>
                 </div>
               </div>
-              <div>
+              <div className="min-w-0">
                 <label className="mb-1.5 block text-sm font-medium text-ink">
                   ขั้นต่ำสุด
                 </label>
-                <div className="relative">
+                <div className="relative min-w-0">
                   <input
                     type="number"
+                    inputMode="numeric"
                     value={minBaht}
                     onChange={(e) => setMinBaht(Number(e.target.value))}
-                    className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-12 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                    className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-12 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                   />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                     บาท
                   </span>
                 </div>
@@ -315,9 +317,9 @@ export default function LoanCalculator() {
                   type="number"
                   value={fixedPayment}
                   onChange={(e) => setFixedPayment(Number(e.target.value))}
-                  className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                  className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                   บาท
                 </span>
               </div>
@@ -333,9 +335,9 @@ export default function LoanCalculator() {
                 type="number"
                 value={extra}
                 onChange={(e) => setExtra(Number(e.target.value))}
-                className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                 บาท
               </span>
             </div>
@@ -347,7 +349,7 @@ export default function LoanCalculator() {
       </div>
 
       {result && (
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           {result.base.diverged && (
             <div className="rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-800">
               <strong>⚠ จ่ายไม่พอครอบคลุมดอกเบี้ย</strong> — หนี้จะเพิ่มขึ้น
@@ -493,8 +495,8 @@ export default function LoanCalculator() {
                 </span>
               )}
             </h3>
-            <div className="overflow-x-auto rounded-xl border border-line">
-              <table className="w-full min-w-[600px] text-sm">
+            <div className="table-wrap">
+              <table className="text-sm">
                 <thead>
                   <tr className="border-b border-line bg-accent/5">
                     <th className="px-4 py-3 text-left font-medium text-ink-soft">

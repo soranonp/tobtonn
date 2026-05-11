@@ -7,7 +7,7 @@ interface Props {
 
 export default function PlaceholderPage({ title, description }: Props) {
   return (
-    <div className="flex flex-col items-center justify-center px-4 py-24 text-center">
+    <div className="container-wrap flex flex-col items-center justify-center py-24 text-center">
       <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-accent/10">
         <svg
           className="h-8 w-8 text-accent"

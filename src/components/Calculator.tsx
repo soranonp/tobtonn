@@ -1,9 +1,16 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import dynamic from "next/dynamic";
 import { calculate, formatNumber } from "@/lib/calculate";
-import CompoundChart from "./CompoundChart";
 import YearlyTable from "./YearlyTable";
+
+const CompoundChart = dynamic(() => import("./CompoundChart"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[320px] w-full animate-pulse rounded-xl bg-line/30" />
+  ),
+});
 
 type Frequency = 1 | 12 | 365;
 
@@ -31,9 +38,9 @@ export default function Calculator() {
     months > 0 ? `${years} ปี ${months} เดือน` : `${years} ปี`;
 
   return (
-    <div className="grid items-start gap-8 lg:grid-cols-[380px_1fr]">
+    <div className="grid items-start gap-8 lg:grid-cols-[380px_minmax(0,1fr)]">
       {/* LEFT — Input Card */}
-      <div className="rounded-2xl border border-line bg-white/60 p-6 shadow-sm backdrop-blur-sm">
+      <div className="min-w-0 rounded-2xl border border-line bg-white/60 p-4 shadow-sm backdrop-blur-sm sm:p-6">
         <div className="space-y-5">
           {/* เงินต้น */}
           <div>
@@ -42,12 +49,16 @@ export default function Calculator() {
             </label>
             <div className="relative">
               <input
+                id="ci-principal"
                 type="number"
+                inputMode="decimal"
+                enterKeyHint="next"
+                min={0}
                 value={principal}
                 onChange={(e) => setPrincipal(Number(e.target.value))}
-                className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                className="h-12 w-full rounded-xl border border-line bg-white px-4 pr-14 font-mono text-base outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                 บาท
               </span>
             </div>
@@ -63,9 +74,9 @@ export default function Calculator() {
                 type="number"
                 value={monthly}
                 onChange={(e) => setMonthly(Number(e.target.value))}
-                className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                 บาท
               </span>
             </div>
@@ -85,9 +96,9 @@ export default function Calculator() {
                 value={rate}
                 onChange={(e) => setRate(Number(e.target.value))}
                 step={0.1}
-                className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                className="w-full min-h-[48px] rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                 %
               </span>
             </div>
@@ -99,28 +110,30 @@ export default function Calculator() {
               ระยะเวลา
             </label>
             <div className="grid grid-cols-2 gap-3">
-              <div className="relative">
+              <div className="relative min-w-0">
                 <input
                   type="number"
+                  inputMode="numeric"
                   value={years}
                   onChange={(e) => setYears(Number(e.target.value))}
                   min={0}
-                  className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                  className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-10 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                   ปี
                 </span>
               </div>
-              <div className="relative">
+              <div className="relative min-w-0">
                 <input
                   type="number"
+                  inputMode="numeric"
                   value={months}
                   onChange={(e) => setMonths(Number(e.target.value))}
                   min={0}
                   max={11}
-                  className="w-full rounded-xl border border-line bg-white px-4 py-3 pr-14 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
+                  className="w-full min-h-[48px] min-w-0 rounded-xl border border-line bg-white px-4 py-3 pr-12 font-mono text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
                   เดือน
                 </span>
               </div>
@@ -132,7 +145,11 @@ export default function Calculator() {
             <label className="mb-1.5 block text-sm font-medium text-ink">
               ความถี่ในการทบต้น
             </label>
-            <div className="grid grid-cols-3 gap-0 rounded-xl border border-line bg-white p-1">
+            <div
+              role="radiogroup"
+              aria-label="ความถี่ในการทบต้น"
+              className="grid grid-cols-3 gap-1 rounded-xl border border-line bg-white p-1"
+            >
               {([
                 [1, "รายปี"],
                 [12, "รายเดือน"],
@@ -140,8 +157,11 @@ export default function Calculator() {
               ] as const).map(([val, label]) => (
                 <button
                   key={val}
+                  type="button"
+                  role="radio"
+                  aria-checked={frequency === val}
                   onClick={() => setFrequency(val)}
-                  className={`rounded-lg px-3 py-2 text-sm font-medium transition-all ${
+                  className={`min-h-[44px] rounded-lg px-2 py-2 text-sm font-medium transition-all ${
                     frequency === val
                       ? "bg-accent text-white shadow-sm"
                       : "text-ink-soft hover:bg-accent/5"
@@ -155,8 +175,9 @@ export default function Calculator() {
 
           {/* ปุ่มคำนวณ */}
           <button
+            type="button"
             onClick={() => setCalcKey((k) => k + 1)}
-            className="w-full rounded-xl bg-accent py-3.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-accent-bright hover:shadow-md active:scale-[0.98]"
+            className="min-h-[48px] w-full rounded-xl bg-accent py-3.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-accent-bright hover:shadow-md active:scale-[0.98]"
           >
             คำนวณใหม่
           </button>
@@ -165,7 +186,7 @@ export default function Calculator() {
 
       {/* RIGHT — Results */}
       {result && (
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           {/* Subtitle */}
           <p className="text-sm text-ink-soft">
             ภายใน{" "}
