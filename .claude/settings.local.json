@@ -33,7 +33,12 @@
       "Bash(awk 'NR>3 {tot+=$5; print $5\"\\\\t\"$NF} END {print \"---\"; print tot/1024\" KB total\"}')",
       "Bash(npx next *)",
       "Bash(lsof -iTCP:3000 -sTCP:LISTEN -P)",
-      "Bash(xargs -I{} sh -c 'echo \"{}: $\\(wc -c < {}\\)\"')"
+      "Bash(xargs -I{} sh -c 'echo \"{}: $\\(wc -c < {}\\)\"')",
+      "Read(//tmp/**)",
+      "Bash(grep -rB0 -A0 \"font-display\" /Users/non_sonnon/Documents/tobtonn/src/ --include=\"*.tsx\")",
+      "Bash(kill %1)",
+      "Bash(wait)",
+      "Bash(pkill -f \"next-server\")"
     ]
   }
 }

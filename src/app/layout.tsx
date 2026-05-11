@@ -11,27 +11,46 @@ import GAPageView from "@/components/GAPageView";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
+// Critical: preloaded for above-the-fold rendering
 const fraunces = Fraunces({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-display",
-  weight: ["400", "500", "600", "700", "800"],
-  style: ["normal", "italic"],
+  weight: ["700"],
 });
 
 const ibmPlex = IBM_Plex_Sans_Thai({
   subsets: ["thai", "latin"],
   display: "swap",
   variable: "--font-body",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400"],
+});
+
+// Extra weights / styles: registered but not preloaded — browser fetches on demand
+const fraunceExtras = Fraunces({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["600"],
+  style: ["normal", "italic"],
+  preload: false,
+  adjustFontFallback: false,
+});
+
+const ibmPlexExtras = IBM_Plex_Sans_Thai({
+  subsets: ["thai", "latin"],
+  display: "swap",
+  weight: ["500", "700"],
+  preload: false,
+  adjustFontFallback: false,
 });
 
 const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-mono",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "700"],
   preload: false,
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
@@ -152,7 +171,7 @@ export default function RootLayout({
   return (
     <html
       lang="th"
-      className={`${fraunces.variable} ${ibmPlex.variable} ${jetBrainsMono.variable}`}
+      className={`${fraunces.variable} ${ibmPlex.variable} ${jetBrainsMono.variable} ${fraunceExtras.className} ${ibmPlexExtras.className}`}
     >
       <head>
         <script
@@ -160,12 +179,11 @@ export default function RootLayout({
         />
         {GA_ID && (
           <>
-            <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-              strategy="afterInteractive"
+              strategy="lazyOnload"
             />
-            <Script id="google-analytics" strategy="afterInteractive">
+            <Script id="google-analytics" strategy="lazyOnload">
               {`gtag('js', new Date());
 gtag('config', '${GA_ID}', { send_page_view: false });`}
             </Script>
