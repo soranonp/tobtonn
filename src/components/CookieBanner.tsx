@@ -22,27 +22,24 @@ export function openCookieBanner() {
   }
 }
 
-declare global {
-  interface Window {
-    dataLayer: unknown[];
-    gtag?: (...args: unknown[]) => void;
-  }
-}
-
 function applyConsent(consent: { analytics: boolean; ads: boolean }) {
   if (typeof window === "undefined") return;
   window.dataLayer = window.dataLayer || [];
-  // Push update via dataLayer (works even before gtag.js loads)
-  window.dataLayer.push([
-    "consent",
-    "update",
-    {
-      ad_storage: consent.ads ? "granted" : "denied",
-      analytics_storage: consent.analytics ? "granted" : "denied",
-      ad_user_data: consent.ads ? "granted" : "denied",
-      ad_personalization: consent.ads ? "granted" : "denied",
-    },
-  ]);
+  window.gtag?.("consent", "update", {
+    ad_storage: consent.ads ? "granted" : "denied",
+    analytics_storage: consent.analytics ? "granted" : "denied",
+    ad_user_data: consent.ads ? "granted" : "denied",
+    ad_personalization: consent.ads ? "granted" : "denied",
+  });
+}
+
+function firePageView() {
+  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
+  window.gtag("event", "page_view", {
+    page_location: window.location.href,
+    page_path: window.location.pathname + window.location.search,
+    page_title: document.title,
+  });
 }
 
 function saveConsent(consent: { analytics: boolean; ads: boolean }) {
@@ -90,6 +87,7 @@ export default function CookieBanner() {
 
   const handleAcceptAll = () => {
     saveConsent({ analytics: true, ads: true });
+    firePageView();
     setVisible(false);
   };
 
@@ -100,6 +98,7 @@ export default function CookieBanner() {
 
   const handleSavePreferences = (analytics: boolean, ads: boolean) => {
     saveConsent({ analytics, ads });
+    if (analytics) firePageView();
     setModalOpen(false);
     setVisible(false);
   };

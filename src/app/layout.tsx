@@ -1,9 +1,14 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
+import Script from "next/script";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CookieBanner from "@/components/CookieBanner";
 import BackToTop from "@/components/BackToTop";
+import GAPageView from "@/components/GAPageView";
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tobtonn.com"),
@@ -126,6 +131,18 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{ __html: consentDefaultScript }}
         />
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`gtag('js', new Date());
+gtag('config', '${GA_ID}', { send_page_view: false });`}
+            </Script>
+          </>
+        )}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -149,6 +166,11 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           ข้ามไปยังเนื้อหา
         </a>
+        {GA_ID && (
+          <Suspense fallback={null}>
+            <GAPageView />
+          </Suspense>
+        )}
         <SiteHeader />
         <main id="main-content" className="flex-1">
           {children}
